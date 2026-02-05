@@ -3,8 +3,14 @@ layout: default
 ---
 
 <div class="home-intro">
-  <h1>{{ site.title }}</h1>
-  <p class="tagline">{{ site.description }}</p>
+  <div class="profile-row">
+    <img src="https://github.com/AdamLovattDevOps.png" alt="Profile" class="profile-pic">
+    <div class="profile-info">
+      <p class="tagline">{{ site.description }}</p>
+      <a href="https://github.com/AdamLovattDevOps" class="github-link">github.com/AdamLovattDevOps</a>
+    </div>
+  </div>
+  <img src="https://ghchart.rshah.org/AdamLovattDevOps" alt="GitHub contributions" class="contrib-chart">
 </div>
 
 {{ content }}
