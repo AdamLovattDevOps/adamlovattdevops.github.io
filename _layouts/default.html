@@ -7,63 +7,43 @@
   <meta name="description" content="{{ page.description | default: site.description }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0a0a0f;
-      --bg-secondary: #12121a;
-      --bg-tertiary: #1a1a25;
-      --text: #f0f0f5;
-      --text-muted: #9090a0;
-      --accent: #6366f1;
-      --accent-bright: #818cf8;
-      --accent-glow: rgba(99, 102, 241, 0.3);
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --border: #2a2a3a;
-      --code-bg: #15151f;
-      --gradient-start: #6366f1;
-      --gradient-end: #a855f7;
+      --bg: #111;
+      --text: #ccc;
+      --text-muted: #888;
+      --accent: #6bf;
+      --border: #333;
     }
 
     [data-theme="light"] {
-      --bg: #fafafa;
-      --bg-secondary: #ffffff;
-      --bg-tertiary: #f5f5f5;
-      --text: #18181b;
-      --text-muted: #71717a;
-      --accent: #6366f1;
-      --accent-bright: #4f46e5;
-      --accent-glow: rgba(99, 102, 241, 0.15);
-      --border: #e4e4e7;
-      --code-bg: #f4f4f5;
+      --bg: #fff;
+      --text: #222;
+      --text-muted: #666;
+      --accent: #07c;
+      --border: #ddd;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
       font-size: 16px;
-      -webkit-font-smoothing: antialiased;
     }
 
     .container {
-      max-width: 720px;
+      max-width: 700px;
       margin: 0 auto;
       padding: 24px;
     }
 
     header {
-      padding: 32px 0;
-      margin-bottom: 48px;
+      padding: 24px 0;
+      margin-bottom: 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -72,209 +52,106 @@
     .site-title {
       color: var(--text);
       text-decoration: none;
-      font-weight: 700;
-      font-size: 1.1em;
-      letter-spacing: -0.02em;
+      font-weight: 600;
     }
 
     .theme-toggle {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-      border: 1px solid var(--border);
+      background: none;
+      border: none;
       color: var(--text-muted);
-      border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
-      transition: all 0.2s ease;
+      font-size: 18px;
+      padding: 4px;
     }
 
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-glow);
-    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-    a {
-      color: var(--accent-bright);
-      text-decoration: none;
-      transition: color 0.15s ease;
-    }
-    a:hover {
-      color: var(--gradient-end);
-    }
-
-    h1, h2, h3, h4 {
+    h1, h2, h3 {
       color: var(--text);
       font-weight: 600;
-      letter-spacing: -0.02em;
       line-height: 1.3;
     }
 
-    h1 {
-      font-size: 2.2em;
-      margin-top: 0;
-      margin-bottom: 0.5em;
-      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    h1 { font-size: 1.8em; margin-bottom: 0.5em; }
+    h2 { font-size: 1.3em; margin-top: 2em; margin-bottom: 0.6em; }
+    h3 { font-size: 1.1em; margin-top: 1.5em; margin-bottom: 0.5em; }
 
-    h2 {
-      font-size: 1.4em;
-      margin-top: 2.5em;
-      margin-bottom: 0.8em;
-      padding-bottom: 0.4em;
-      border-bottom: 1px solid var(--border);
-    }
-
-    h3 {
-      font-size: 1.15em;
-      margin-top: 2em;
-      margin-bottom: 0.6em;
-    }
-
-    p, ul, ol {
-      margin-bottom: 1.2em;
-    }
-
-    li {
-      margin-bottom: 0.4em;
-    }
-
-    strong {
-      color: var(--text);
-      font-weight: 600;
-    }
+    p, ul, ol { margin-bottom: 1em; }
+    li { margin-bottom: 0.3em; }
 
     code {
-      font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
-      background: var(--code-bg);
-      padding: 3px 7px;
-      border-radius: 5px;
-      font-size: 0.88em;
-      border: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9em;
+      background: var(--border);
+      padding: 2px 5px;
+      border-radius: 3px;
     }
 
     pre {
-      background: var(--code-bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 20px;
+      background: var(--border);
+      border-radius: 6px;
+      padding: 16px;
       overflow-x: auto;
-      margin: 1.5em 0;
+      margin: 1em 0;
     }
 
     pre code {
       background: none;
       padding: 0;
-      border: none;
-      font-size: 0.9em;
-      line-height: 1.6;
     }
 
     img {
       max-width: 100%;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      margin: 1.5em 0;
+      border-radius: 6px;
+      margin: 1em 0;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 1.5em 0;
+      margin: 1em 0;
       font-size: 0.95em;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--border);
     }
 
     th, td {
-      padding: 12px 16px;
+      padding: 10px 12px;
       text-align: left;
       border-bottom: 1px solid var(--border);
     }
 
     th {
-      background: var(--bg-tertiary);
       font-weight: 600;
+      color: var(--text-muted);
       font-size: 0.85em;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover td {
-      background: var(--bg-secondary);
+      letter-spacing: 0.03em;
     }
 
     blockquote {
-      border-left: 3px solid var(--accent);
-      margin: 1.5em 0;
-      padding: 0.5em 0 0.5em 1.2em;
+      border-left: 2px solid var(--border);
+      margin: 1em 0;
+      padding-left: 1em;
       color: var(--text-muted);
-      background: var(--bg-secondary);
-      border-radius: 0 8px 8px 0;
-    }
-
-    .post-meta {
-      color: var(--text-muted);
-      font-size: 0.9em;
-      margin-bottom: 2em;
     }
 
     hr {
       border: none;
       border-top: 1px solid var(--border);
-      margin: 3em 0;
+      margin: 2em 0;
     }
 
     footer {
       border-top: 1px solid var(--border);
-      margin-top: 80px;
-      padding: 24px 0;
+      margin-top: 60px;
+      padding: 20px 0;
       color: var(--text-muted);
       font-size: 0.85em;
     }
 
     .home-posts { list-style: none; }
-    .home-posts li {
-      margin: 1.2em 0;
-      padding: 16px;
-      background: var(--bg-secondary);
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      transition: border-color 0.2s ease;
-    }
-    .home-posts li:hover {
-      border-color: var(--accent);
-    }
-    .home-posts .date {
-      color: var(--text-muted);
-      font-size: 0.85em;
-      display: block;
-      margin-top: 4px;
-    }
-
-    /* Highlight important stats */
-    strong code {
-      background: var(--accent-glow);
-      border-color: var(--accent);
-    }
-
-    /* TL;DR styling */
-    p:first-of-type strong:first-child {
-      color: var(--accent-bright);
-    }
+    .home-posts li { margin: 1em 0; }
+    .home-posts .date { color: var(--text-muted); font-size: 0.85em; }
   </style>
 </head>
 <body>
@@ -282,7 +159,7 @@
     <header>
       <a href="/" class="site-title">{{ site.title }}</a>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-        <span class="theme-icon">☀️</span>
+        <span class="theme-icon">☀</span>
       </button>
     </header>
 
@@ -296,21 +173,15 @@
   </div>
 
   <script>
-    function getTheme() {
-      return localStorage.getItem('theme') || 'dark';
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('theme', t);
+      document.querySelector('.theme-icon').textContent = t === 'dark' ? '☀' : '☾';
     }
-
-    function setTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      document.querySelector('.theme-icon').textContent = theme === 'dark' ? '☀️' : '🌙';
-    }
-
     function toggleTheme() {
-      setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+      setTheme((localStorage.getItem('theme') || 'dark') === 'dark' ? 'light' : 'dark');
     }
-
-    setTheme(getTheme());
+    setTheme(localStorage.getItem('theme') || 'dark');
   </script>
 </body>
 </html>
