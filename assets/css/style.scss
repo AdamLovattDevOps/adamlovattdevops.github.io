@@ -3,107 +3,138 @@
 
 @import "minima";
 
-/* Dark mode - respects system preference */
+/* Dark mode toggle button */
+.theme-toggle {
+  background: none;
+  border: 2px solid currentColor;
+  border-radius: 20px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  float: right;
+  margin-top: -40px;
+}
+
+.theme-toggle:hover {
+  opacity: 0.7;
+}
+
+/* Dark mode styles */
+[data-theme="dark"] body,
+html:not([data-theme="light"]) body {
+  background-color: #1a1a2e;
+  color: #eaeaea;
+}
+
+[data-theme="dark"] a,
+html:not([data-theme="light"]) a {
+  color: #6db3f2;
+}
+
+[data-theme="dark"] a:visited,
+html:not([data-theme="light"]) a:visited {
+  color: #9b8adb;
+}
+
+[data-theme="dark"] .site-header,
+html:not([data-theme="light"]) .site-header {
+  background-color: #16213e;
+  border-bottom-color: #0f3460;
+}
+
+[data-theme="dark"] .site-title,
+[data-theme="dark"] .site-title:visited,
+html:not([data-theme="light"]) .site-title {
+  color: #eaeaea;
+}
+
+[data-theme="dark"] .site-nav .page-link,
+html:not([data-theme="light"]) .site-nav .page-link {
+  color: #eaeaea;
+}
+
+[data-theme="dark"] .site-footer,
+html:not([data-theme="light"]) .site-footer {
+  background-color: #16213e;
+  border-top-color: #0f3460;
+  color: #9a9a9a;
+}
+
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h4,
+[data-theme="dark"] .post-title, [data-theme="dark"] .post-link,
+html:not([data-theme="light"]) h1, html:not([data-theme="light"]) h2 {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .post-meta,
+html:not([data-theme="light"]) .post-meta {
+  color: #9a9a9a;
+}
+
+[data-theme="dark"] code,
+html:not([data-theme="light"]) code {
+  background-color: #2d2d44;
+  border-color: #3d3d5c;
+  color: #f8f8f2;
+}
+
+[data-theme="dark"] pre,
+html:not([data-theme="light"]) pre {
+  background-color: #2d2d44;
+  border-color: #3d3d5c;
+}
+
+[data-theme="dark"] pre code {
+  background-color: transparent;
+}
+
+[data-theme="dark"] table,
+html:not([data-theme="light"]) table {
+  color: #eaeaea;
+}
+
+[data-theme="dark"] table th,
+html:not([data-theme="light"]) table th {
+  background-color: #2d2d44;
+  border-color: #3d3d5c;
+}
+
+[data-theme="dark"] table td,
+html:not([data-theme="light"]) table td {
+  border-color: #3d3d5c;
+}
+
+[data-theme="dark"] table tr:nth-child(even),
+html:not([data-theme="light"]) table tr:nth-child(even) {
+  background-color: #222238;
+}
+
+/* Light mode override when explicitly set */
+[data-theme="light"] body {
+  background-color: #ffffff;
+  color: #111111;
+}
+
+[data-theme="light"] .site-header {
+  background-color: #ffffff;
+}
+
+[data-theme="light"] code {
+  background-color: #eef;
+}
+
+/* Default uses system preference via prefers-color-scheme */
+@media (prefers-color-scheme: light) {
+  html:not([data-theme="dark"]) body {
+    background-color: #ffffff;
+    color: #111111;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
-  body {
+  html:not([data-theme="light"]) body {
     background-color: #1a1a2e;
     color: #eaeaea;
-  }
-
-  a {
-    color: #6db3f2;
-  }
-
-  a:visited {
-    color: #9b8adb;
-  }
-
-  a:hover {
-    color: #8cd3ff;
-  }
-
-  .site-header {
-    background-color: #16213e;
-    border-bottom-color: #0f3460;
-  }
-
-  .site-title, .site-title:visited {
-    color: #eaeaea;
-  }
-
-  .site-nav .page-link {
-    color: #eaeaea;
-  }
-
-  .site-footer {
-    background-color: #16213e;
-    border-top-color: #0f3460;
-  }
-
-  .post-content h1,
-  .post-content h2,
-  .post-content h3,
-  .post-content h4 {
-    color: #ffffff;
-  }
-
-  .post-title,
-  .post-link {
-    color: #ffffff;
-  }
-
-  .post-meta {
-    color: #9a9a9a;
-  }
-
-  code {
-    background-color: #2d2d44;
-    border-color: #3d3d5c;
-    color: #f8f8f2;
-  }
-
-  pre,
-  pre.highlight {
-    background-color: #2d2d44;
-    border-color: #3d3d5c;
-  }
-
-  pre code {
-    background-color: transparent;
-  }
-
-  blockquote {
-    color: #b0b0b0;
-    border-left-color: #4a4a6a;
-  }
-
-  table {
-    color: #eaeaea;
-  }
-
-  table th {
-    background-color: #2d2d44;
-    border-color: #3d3d5c;
-  }
-
-  table td {
-    border-color: #3d3d5c;
-  }
-
-  table tr:nth-child(even) {
-    background-color: #222238;
-  }
-
-  hr {
-    border-color: #3d3d5c;
-  }
-
-  /* Invert images slightly for dark mode readability */
-  img {
-    opacity: 0.9;
-  }
-
-  img:hover {
-    opacity: 1;
   }
 }
