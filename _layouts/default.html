@@ -78,11 +78,17 @@
       color: var(--text);
       font-weight: 600;
       font-size: 1em;
+      text-decoration: none;
     }
 
     .header-link {
       color: var(--text-muted);
       font-size: 0.8em;
+      text-decoration: none;
+    }
+
+    .header-link:hover {
+      color: var(--accent);
     }
 
     .theme-toggle {
@@ -284,13 +290,15 @@
 <body>
   <div class="container">
     <header>
-      <a href="/" class="header-profile">
-        <img src="https://github.com/AdamLovattDevOps.png" alt="Profile" class="header-pic">
+      <div class="header-profile">
+        <a href="/">
+          <img src="https://github.com/AdamLovattDevOps.png" alt="Profile" class="header-pic">
+        </a>
         <div class="header-info">
-          <span class="site-title">{{ site.title }}</span>
-          <span class="header-link">github.com/AdamLovattDevOps</span>
+          <a href="/" class="site-title">{{ site.title }}</a>
+          <a href="https://github.com/AdamLovattDevOps" class="header-link">github.com/AdamLovattDevOps</a>
         </div>
-      </a>
+      </div>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
         <span class="theme-icon">☀</span>
       </button>
