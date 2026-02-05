@@ -114,10 +114,15 @@ For game streaming and tools like Synergy, the rule of thumb is <20ms for "smoot
 
 ## The Scripts
 
-I've open-sourced the diagnostic tools on [GitHub](https://github.com/adamlovattdevops/slow-wifi):
+The scripts I used are on [GitHub](https://github.com/adamlovattdevops/slow-wifi) if you want to test your own network:
 
-- **jitter-check.py** - Continuous latency monitor with spike detection
-- **network_optimizer_test.py** - A/B test various macOS network settings
+```bash
+# Monitor latency in real-time
+python3 jitter-check.py 192.168.1.1
+
+# A/B test different macOS settings
+python3 network_optimizer_test.py 192.168.1.1
+```
 
 ## Conclusion
 
