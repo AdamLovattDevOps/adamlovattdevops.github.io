@@ -1,8 +1,7 @@
 title: Adam Lovatt
 description: Tech notes worth writing down
-theme: minima
 
 markdown: kramdown
 permalink: /:title/
 
-show_excerpts: true
+# No theme - using custom CSS
