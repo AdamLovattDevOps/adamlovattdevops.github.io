@@ -5,11 +5,13 @@ date: 2026-02-05
 description: "How I fixed 90ms latency spikes on my Mac by disabling a single feature I never use"
 ---
 
-**TL;DR:** If you're experiencing random lag spikes on your Mac during RDP, gaming, or video calls, disable AWDL (AirDrop's wireless protocol). It fixed my 90ms spikes instantly.
+**TL;DR:** If you're experiencing random lag spikes on your Mac during game streaming, video calls, or using tools like Synergy, disable AWDL (AirDrop's wireless protocol). It fixed my 90ms spikes instantly.
 
 ## The Problem
 
-I was getting frustrating mouse "floatiness" during Remote Desktop sessions. The cursor would feel responsive for a few seconds, then suddenly lag, then recover. Classic symptoms of network jitter.
+I was getting frustrating mouse "floatiness" when using [Synergy by Symless](https://symless.com/synergy) to share my keyboard and mouse across machines. The cursor would feel responsive for a few seconds, then suddenly lag, then recover. Classic symptoms of network jitter.
+
+I also noticed the same issue with [Sunshine](https://github.com/LizardByte/Sunshine)/[Apollo](https://github.com/ClassicOldSong/Apollo) game streaming - input lag that came and went in a regular pattern.
 
 I wrote a quick Python script to measure LAN latency to my router every 200ms. The results were damning:
 
@@ -96,7 +98,7 @@ Why does this matter? Here's where those latencies sit relative to human percept
 - **100ms**: Threshold where delay becomes consciously perceivable
 - **250ms**: Average human visual reaction time
 
-For RDP, the rule of thumb is <20ms for "smooth" and <50ms for "usable". With AWDL on, 29% of my packets exceeded the smooth threshold. With it off, zero did.
+For game streaming and tools like Synergy, the rule of thumb is <20ms for "smooth" and <50ms for "usable". With AWDL on, 29% of my packets exceeded the smooth threshold. With it off, zero did.
 
 ## The Scripts
 
@@ -107,7 +109,7 @@ I've open-sourced the diagnostic tools on [GitHub](https://github.com/adamlovatt
 
 ## Conclusion
 
-Apple's seamless device ecosystem comes at a cost: AWDL constantly scanning for nearby devices, interrupting your Wi-Fi multiple times per second. If you're not using AirDrop, AirPlay, or Handoff, turn it off. Your RDP sessions, video calls, and games will thank you.
+Apple's seamless device ecosystem comes at a cost: AWDL constantly scanning for nearby devices, interrupting your Wi-Fi multiple times per second. If you're not using AirDrop, AirPlay, or Handoff, turn it off. Your Sunshine/Apollo streams, Synergy sessions, and video calls will thank you.
 
 ---
 

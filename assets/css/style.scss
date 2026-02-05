@@ -1,0 +1,109 @@
+---
+---
+
+@import "minima";
+
+/* Dark mode - respects system preference */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1a1a2e;
+    color: #eaeaea;
+  }
+
+  a {
+    color: #6db3f2;
+  }
+
+  a:visited {
+    color: #9b8adb;
+  }
+
+  a:hover {
+    color: #8cd3ff;
+  }
+
+  .site-header {
+    background-color: #16213e;
+    border-bottom-color: #0f3460;
+  }
+
+  .site-title, .site-title:visited {
+    color: #eaeaea;
+  }
+
+  .site-nav .page-link {
+    color: #eaeaea;
+  }
+
+  .site-footer {
+    background-color: #16213e;
+    border-top-color: #0f3460;
+  }
+
+  .post-content h1,
+  .post-content h2,
+  .post-content h3,
+  .post-content h4 {
+    color: #ffffff;
+  }
+
+  .post-title,
+  .post-link {
+    color: #ffffff;
+  }
+
+  .post-meta {
+    color: #9a9a9a;
+  }
+
+  code {
+    background-color: #2d2d44;
+    border-color: #3d3d5c;
+    color: #f8f8f2;
+  }
+
+  pre,
+  pre.highlight {
+    background-color: #2d2d44;
+    border-color: #3d3d5c;
+  }
+
+  pre code {
+    background-color: transparent;
+  }
+
+  blockquote {
+    color: #b0b0b0;
+    border-left-color: #4a4a6a;
+  }
+
+  table {
+    color: #eaeaea;
+  }
+
+  table th {
+    background-color: #2d2d44;
+    border-color: #3d3d5c;
+  }
+
+  table td {
+    border-color: #3d3d5c;
+  }
+
+  table tr:nth-child(even) {
+    background-color: #222238;
+  }
+
+  hr {
+    border-color: #3d3d5c;
+  }
+
+  /* Invert images slightly for dark mode readability */
+  img {
+    opacity: 0.9;
+  }
+
+  img:hover {
+    opacity: 1;
+  }
+}
