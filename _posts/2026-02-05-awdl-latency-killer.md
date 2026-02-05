@@ -67,7 +67,9 @@ The `ifconfig` command only lasts until reboot (or until macOS decides to re-ena
 2. Set AirDrop to **"No One"**
 3. Turn **Handoff** off
 
-**Via Terminal (more thorough):**
+I found this alone wasn't reliable - the settings would quietly re-enable themselves. You also need the terminal commands:
+
+**Via Terminal (required):**
 ```bash
 # Disable AirDrop
 defaults write com.apple.NetworkBrowser DisableAirDrop -bool YES
