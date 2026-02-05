@@ -48,10 +48,9 @@ AWDL was the only setting that mattered. Disabling it:
 
 ## The Fix
 
-If you don't use AirDrop (I never do), disable AWDL:
+### Step 1: Disable AWDL immediately
 
 ```bash
-# Disable immediately
 sudo ifconfig awdl0 down
 
 # Verify it worked
@@ -59,31 +58,44 @@ ifconfig awdl0 | grep status
 # Should show: status: inactive
 ```
 
-To make it permanent across reboots, create a launch daemon:
+### Step 2: Disable AirDrop and Handoff properly
+
+The `ifconfig` command only lasts until reboot (or until macOS decides to re-enable AWDL). To make it stick, disable the features that use AWDL:
+
+**Via System Settings:**
+1. Go to **System Settings → General → AirDrop & Handoff**
+2. Set AirDrop to **"No One"**
+3. Turn **Handoff** off
+
+**Via Terminal (more thorough):**
+```bash
+# Disable AirDrop
+defaults write com.apple.NetworkBrowser DisableAirDrop -bool YES
+
+# Disable Handoff
+defaults write com.apple.coreservices.useractivityd ActivityAdvertisingAllowed -bool NO
+defaults write com.apple.coreservices.useractivityd ActivityReceivingAllowed -bool NO
+```
+
+### Step 3: After reboots
+
+With AirDrop and Handoff disabled, AWDL usually stays off. But if you notice lag returning, just run:
 
 ```bash
-# Create the plist
-sudo tee /Library/LaunchDaemons/com.user.disable-awdl.plist << 'EOF'
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.user.disable-awdl</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/sbin/ifconfig</string>
-        <string>awdl0</string>
-        <string>down</string>
-    </array>
-    <key>RunAtLoad</key>
-    <true/>
-</dict>
-</plist>
-EOF
+sudo ifconfig awdl0 down
+```
 
-# Load it
-sudo launchctl load /Library/LaunchDaemons/com.user.disable-awdl.plist
+I initially tried using a launch daemon to automatically disable AWDL at boot, but ran into issues with `launchctl` errors on newer macOS versions. The `defaults write` approach above is cleaner and Apple-supported.
+
+### Reverting (if needed)
+
+If you ever want AirDrop back:
+
+```bash
+defaults write com.apple.NetworkBrowser DisableAirDrop -bool NO
+defaults delete com.apple.coreservices.useractivityd ActivityAdvertisingAllowed
+defaults delete com.apple.coreservices.useractivityd ActivityReceivingAllowed
+sudo ifconfig awdl0 up
 ```
 
 ## Human Perception Context
