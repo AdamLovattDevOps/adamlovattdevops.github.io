@@ -1,23 +1,8 @@
 title: Adam Lovatt
-description: DevOps, networking, and occasional deep dives
+description: Tech notes worth writing down
 theme: minima
-remote_theme: jekyll/minima
 
-# Build settings
 markdown: kramdown
-highlighter: rouge
-
-# Permalink style
 permalink: /:title/
 
-# Author info
-author:
-  name: Adam Lovatt
-  email: ""
-
-# Social links (optional - uncomment and fill in)
-# twitter_username: yourhandle
-# github_username: adamlovattdevops
-
-# Show excerpts on home page
 show_excerpts: true
