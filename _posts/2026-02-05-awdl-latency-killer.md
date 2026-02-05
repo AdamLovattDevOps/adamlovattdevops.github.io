@@ -5,7 +5,7 @@ date: 2026-02-05
 description: "How I fixed 90ms latency spikes on my Mac by disabling a single feature I never use"
 ---
 
-**TL;DR:** If you're experiencing random lag spikes on your Mac during game streaming, video calls, or using tools like Synergy, disable AWDL (AirDrop's wireless protocol). It fixed my 90ms spikes instantly.
+**TL;DR:** If you're experiencing random lag spikes on your Mac over Wi-Fi, AWDL (AirDrop's wireless protocol) is likely the cause. I wrote a daemon that keeps it disabled permanently - even after sleep/wake cycles.
 
 ## The Problem
 
@@ -48,55 +48,45 @@ AWDL was the only setting that mattered. Disabling it:
 
 ## The Fix
 
-### Step 1: Disable AWDL immediately
-
-```bash
-sudo ifconfig awdl0 down
-
-# Verify it worked
-ifconfig awdl0 | grep status
-# Should show: status: inactive
-```
-
-### Step 2: Disable AirDrop and Handoff properly
-
-The `ifconfig` command only lasts until reboot (or until macOS decides to re-enable AWDL). To make it stick, disable the features that use AWDL:
-
-**Via System Settings:**
-1. Go to **System Settings → General → AirDrop & Handoff**
-2. Set AirDrop to **"No One"**
-3. Turn **Handoff** off
-
-I found this alone wasn't reliable - the settings would quietly re-enable themselves. You also need the terminal commands:
-
-**Via Terminal (required):**
-```bash
-# Disable AirDrop
-defaults write com.apple.NetworkBrowser DisableAirDrop -bool YES
-
-# Disable Handoff
-defaults write com.apple.coreservices.useractivityd ActivityAdvertisingAllowed -bool NO
-defaults write com.apple.coreservices.useractivityd ActivityReceivingAllowed -bool NO
-```
-
-### Step 3: After reboots
-
-With AirDrop and Handoff disabled, AWDL usually stays off. But if you notice lag returning, just run:
+### Quick fix (temporary)
 
 ```bash
 sudo ifconfig awdl0 down
 ```
 
-I initially tried using a launch daemon to automatically disable AWDL at boot, but ran into issues with `launchctl` errors on newer macOS versions. The `defaults write` approach above is cleaner and Apple-supported.
+This works immediately but macOS re-enables AWDL after every sleep/wake cycle.
+
+### Permanent fix (runs at boot)
+
+I wrote a guard script that monitors AWDL and disables it whenever macOS turns it back on. Install it as a LaunchDaemon so it starts automatically at boot:
+
+```bash
+# Download the scripts
+git clone https://github.com/adamlovattdevops/slow-wifi.git
+cd slow-wifi
+
+# Install
+sudo cp awdl-guard.sh /usr/local/bin/
+sudo chmod +x /usr/local/bin/awdl-guard.sh
+sudo cp com.local.awdl-guard.plist /Library/LaunchDaemons/
+sudo launchctl load /Library/LaunchDaemons/com.local.awdl-guard.plist
+```
+
+That's it. The script now runs at every boot and catches AWDL reactivating within 5 seconds of sleep/wake.
+
+### What I tried first (doesn't work)
+
+Before writing the daemon, I tried:
+- **System Settings** → AirDrop & Handoff → set to "No One" / Off
+- **`defaults write`** commands to disable AirDrop and Handoff
+
+Both work initially. But close your laptop lid, open it again, and AWDL is back. macOS re-enables it on every sleep/wake cycle regardless of your preferences. The daemon is the only fix that actually sticks.
 
 ### Reverting (if needed)
 
-If you ever want AirDrop back:
-
 ```bash
-defaults write com.apple.NetworkBrowser DisableAirDrop -bool NO
-defaults delete com.apple.coreservices.useractivityd ActivityAdvertisingAllowed
-defaults delete com.apple.coreservices.useractivityd ActivityReceivingAllowed
+sudo launchctl unload /Library/LaunchDaemons/com.local.awdl-guard.plist
+sudo rm /Library/LaunchDaemons/com.local.awdl-guard.plist /usr/local/bin/awdl-guard.sh
 sudo ifconfig awdl0 up
 ```
 
@@ -116,19 +106,22 @@ For game streaming and tools like Synergy, the rule of thumb is <20ms for "smoot
 
 ## The Scripts
 
-The scripts I used are on [GitHub](https://github.com/adamlovattdevops/slow-wifi) if you want to test your own network:
+All scripts are on [GitHub](https://github.com/adamlovattdevops/slow-wifi):
+
+- **`awdl-guard.sh`** + **`com.local.awdl-guard.plist`** - The fix (daemon + LaunchDaemon config)
+- **`jitter-check.py`** - The diagnostic tool I used to find the problem. Run it against any IP to see if you have the same issue:
 
 ```bash
-# Monitor latency in real-time
-python3 jitter-check.py 192.168.1.1
-
-# A/B test different macOS settings
-python3 network_optimizer_test.py 192.168.1.1
+python3 jitter-check.py 192.168.1.1  # your router or any LAN device
 ```
+
+If you see regular spikes every 1-2 seconds, AWDL is probably your culprit.
 
 ## Conclusion
 
-Apple's seamless device ecosystem comes at a cost: AWDL constantly scanning for nearby devices, interrupting your Wi-Fi multiple times per second. If you're not using AirDrop, AirPlay, or Handoff, turn it off. Your Sunshine/Apollo streams, Synergy sessions, and video calls will thank you.
+Apple's seamless ecosystem comes at a hidden cost: AWDL constantly hijacks your Wi-Fi radio to scan for nearby devices, causing 80-90ms latency spikes multiple times per second. System Settings won't save you - macOS re-enables AWDL after every sleep. The daemon approach is the only permanent fix I've found.
+
+If you're not using AirDrop, AirPlay, or Handoff, install the guard and enjoy your lag-free Sunshine streams, Synergy sessions, and video calls.
 
 ---
 
