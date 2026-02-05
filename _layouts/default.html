@@ -49,10 +49,40 @@
       align-items: center;
     }
 
+    .header-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.8em;
+      text-decoration: none;
+    }
+
+    .header-profile:hover {
+      text-decoration: none;
+    }
+
+    .header-pic {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      margin: 0;
+    }
+
+    .header-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1em;
+    }
+
     .site-title {
       color: var(--text);
-      text-decoration: none;
       font-weight: 600;
+      font-size: 1em;
+    }
+
+    .header-link {
+      color: var(--text-muted);
+      font-size: 0.8em;
     }
 
     .theme-toggle {
@@ -254,7 +284,13 @@
 <body>
   <div class="container">
     <header>
-      <a href="/" class="site-title">{{ site.title }}</a>
+      <a href="/" class="header-profile">
+        <img src="https://github.com/AdamLovattDevOps.png" alt="Profile" class="header-pic">
+        <div class="header-info">
+          <span class="site-title">{{ site.title }}</span>
+          <span class="header-link">github.com/AdamLovattDevOps</span>
+        </div>
+      </a>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
         <span class="theme-icon">☀</span>
       </button>
