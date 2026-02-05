@@ -9,7 +9,7 @@ description: "How I fixed 90ms latency spikes on my Mac by disabling a single fe
 
 ## The Problem
 
-I was getting frustrating mouse "floatiness" when using [Synergy by Symless](https://symless.com/synergy) to share my keyboard and mouse across machines. The cursor would feel responsive for a few seconds, then suddenly lag, then recover. Classic symptoms of network jitter.
+I was getting frustrating mouse stickiness when using [Synergy by Symless](https://symless.com/synergy) to share my keyboard and mouse across machines. The cursor would feel responsive for a few seconds, then stutter like skipped frames, then recover. Classic symptoms of network jitter.
 
 I also noticed the same issue with [Sunshine](https://github.com/LizardByte/Sunshine)/[Apollo](https://github.com/ClassicOldSong/Apollo) game streaming - input lag that came and went in a regular pattern.
 
