@@ -2,14 +2,14 @@
 layout: post
 title: "Hijacking the Steam Deck's On-Screen Keyboard"
 date: 2026-08-05
-description: "Steam's OSK fakes keystrokes at the X11 layer, so Ctrl never works. I built one that types through /dev/uinput instead."
+description: "Steam's OSK has no Ctrl, Alt or Esc, and it dies with Steam. I built one that types real keycodes through /dev/uinput instead."
 ---
 
-**TL;DR:** Steam's on-screen keyboard has no `Ctrl`, no `Alt`, no `Esc` and no F-keys, and what it does send is synthesised at the X11 layer — so it can't drive a terminal or a native Wayland app. I wrote a replacement that injects real keycodes through `/dev/uinput` and remapped the hardware keyboard button to summon it instead. Code: [better-handheld-keyboard](https://github.com/AdamLovattDevOps/better-handheld-keyboard).
+**TL;DR:** Steam's on-screen keyboard types letters fine, but it exposes no `Ctrl`, `Alt`, `Super`, `Esc` or F-keys at all, so no shortcut is reachable — and it only exists while Steam is running. I wrote a replacement that registers a virtual input device on `/dev/uinput` and remapped the hardware keyboard button to summon it. Code: [better-handheld-keyboard](https://github.com/AdamLovattDevOps/better-handheld-keyboard).
 
 ## The stock keyboard
 
-Desktop Mode on a SteamOS handheld is KDE Plasma 6 on Wayland. A real desktop. The only text input you get without plugging in USB is Steam's on-screen keyboard, summoned with `Steam + X`.
+Desktop Mode on a SteamOS handheld is a full KDE Plasma desktop — Plasma 6 since SteamOS 3.7, on Wayland by default since 3.8.10 (before that, X11 unless you switched it yourself). The only text input you get without plugging in USB is Steam's on-screen keyboard, summoned with `Steam + X`.
 
 ![Steam's on-screen keyboard in Desktop Mode, annotated](/assets/images/stock-steam-osk.png)
 
@@ -17,27 +17,28 @@ Desktop Mode on a SteamOS handheld is KDE Plasma 6 on Wayland. A real desktop. T
 
 The gaps aren't subtle:
 
-- **No `Ctrl`.** No `Ctrl+C`, no `Ctrl+D`, no `Ctrl+W`. A terminal is unusable.
+- **No `Ctrl`.** No `Ctrl+C`, no `Ctrl+D`, no `Ctrl+W`. Letters reach the terminal; the moment you need to interrupt something, you're stuck.
 - **No `Alt`, no `Super`.** No menu traversal, no window management, no KDE shortcuts.
 - **No `Esc`, no `F1`–`F12`, no `Home`/`End`, no `PgUp`/`PgDn`, no `Del`.** Refresh in Firefox, escape a dialog, jump to the start of a line — all unreachable.
 - **Arrow keys exist, barely.** Four half-height keys in the bottom-right corner, next to `Paste` and `Move`.
 - **Keys that aren't keys.** `X`, `R2` and `L2` glyphs sit on `Backspace`, `Enter` and `Shift` — it's a controller UI wearing a keyboard's clothes.
 - **Opaque, and half the screen.** You can't see the thing you're typing into.
+- **It needs Steam.** It's a Steam client window (`steamwebhelper`). No Steam process, no keyboard.
 
 These are documented complaints going back to launch, not my discovery. It's a keyboard designed for entering a password into a login box, sat in front of a full KDE desktop.
 
 ## Why a replacement instead of a patch
 
-The keys aren't the interesting part — the injection path is.
+The keys aren't the interesting part — where the event is born is.
 
 ![Two ways to fake a keystroke](/assets/images/keystroke-paths.png)
 
-Steam's OSK is an XWayland client called `Steam Input On-screen Keyboard`, and Steam Input fakes its events with the X11 **XTEST** extension. That has two consequences:
+Steam's OSK is a Steam client window whose input goes out through Steam Input's synthetic-input path, which on Linux is built on X11 (`XTEST`). Two practical consequences, neither of which is fixable from the outside:
 
-1. The event is born inside the X server, so it reaches XWayland clients and nothing else. Native Wayland clients are not in that world.
-2. It's a synthetic key press, not a device. Modifier state is whatever the X server can be talked into, not a physical latch — which is why held modifiers are unreliable even where the keys exist.
+1. **Nothing to press.** The layout simply has no modifier keys on it. Whatever the injection path can do, you can't ask it for `Ctrl+C`.
+2. **It's Steam's, not the system's.** It lives and dies with the Steam client, and Steam Input's behaviour on Wayland sessions is patchy enough that a shim ([extest](https://gitlab.com/ancurio/extest)) exists purely to feed it the `XTEST` interface it expects.
 
-Mine goes the other way. `python-evdev` opens `/dev/uinput` and registers a virtual input device, then writes real keycodes into it. The kernel emits them via evdev, libinput picks them up, KWin routes them to whatever holds focus. At that point nothing in userspace can tell it apart from a USB keyboard, so `Ctrl`, `Alt`, `Super`, `F1`–`F12`, `Tab`, `Esc` and the arrows all work everywhere — including `Ctrl+C` in Konsole.
+Mine goes in a layer lower. `python-evdev` opens `/dev/uinput` and registers a virtual input device, then writes real keycodes into it. The kernel emits them via evdev, libinput picks them up, the compositor routes them to whatever holds focus. Nothing in userspace can tell it apart from a USB keyboard, so `Ctrl`, `Alt`, `Super`, `F1`–`F12`, `Tab`, `Esc` and the arrows work everywhere — X11 session or Wayland, XWayland client or native — including `Ctrl+C` in Konsole.
 
 Cost of that approach: the process needs write access to `/dev/uinput`, i.e. membership of the `input` group and a udev rule. That's the whole reason the installer asks for a password once and then makes you log out.
 
@@ -71,7 +72,7 @@ The script is regenerated from `config.json` at daemon start, and the daemon re-
 
 The default trigger mode doesn't fight Steam, it rides it: the keyboard button still opens Steam's OSK, KWin makes that invisible, and a daemon mirrors its visibility onto ours via `SIGUSR1`/`SIGUSR2` on a 100 ms poll.
 
-Which surfaces a Valve bug ([steam-for-linux#9099](https://github.com/ValveSoftware/steam-for-linux/issues/9099)): the OSK leaves windows mapped after dismissal. Opacity `0.0` is invisible, not gone — it still swallows every tap in its rectangle.
+Opacity `0.0` is invisible, not gone — a fully transparent window still sits there swallowing every tap in its rectangle. Valve's own bug compounds it: dismissing the OSK can leave an invisible window mapped and on top, blocking input to whatever is underneath ([steam-for-linux#9099](https://github.com/ValveSoftware/steam-for-linux/issues/9099)).
 
 ![Opacity 0 is not gone](/assets/images/osk-ghost-window.png)
 
@@ -92,6 +93,8 @@ The daemon also watchdogs the keyboard process: its Wayland connection drops whe
 
 Translucent, full key set, US/UK layout switching via a 🌐 key that flips KDE's XKB layout over `org.kde.KeyboardLayouts` DBus **and** re-skins the labels, so what's printed and what's typed stay in sync.
 
+The transparency isn't decoration. A Steam Deck is 1280×800; a Legion Go 2 is 1920×1200. A full-width keyboard eats the bottom third either way, and on those panels there are no pixels to spare — so you need to read the terminal output or the form field you're typing into *through* the keys. Opacity defaults to `0.72` and is a number in `config.json`.
+
 Layout, theme, key sizes, opacity and geometry are plain JSON in `~/.config/handheld-kbd/`. Adding a key is a JSON object with a `label` and an evdev `key` name; unknown key names are skipped with a warning rather than taking the keyboard down.
 
 Two things deliberately absent:
@@ -101,7 +104,7 @@ Two things deliberately absent:
 
 ## Install
 
-Desktop Mode, KDE Plasma 6 (Wayland). Needs `python3`, `python-gobject` (GTK 3), `python-evdev`.
+Desktop Mode, KDE Plasma 6, Wayland session (default from SteamOS 3.8.10; on 3.7 it's `steamos-session-select plasma-wayland-persistent`). Needs `python3`, `python-gobject` (GTK 3), `python-evdev`.
 
 ```bash
 git clone https://github.com/AdamLovattDevOps/better-handheld-keyboard
@@ -115,6 +118,6 @@ There's an experimental gamescope-overlay path for Game Mode in the code, gated 
 
 ---
 
-*Built against SteamOS Desktop Mode on a KDE Plasma 6 handheld. The InputPlumber remap is the only device-specific part — it targets the Legion Go's keyboard button — and the default mirror mode works without it.*
+*Tested on a Steam Deck (1280×800) and a Legion Go 2 (1920×1200). The InputPlumber remap is the only device-specific part — it targets the Legion Go's keyboard button — and the default mirror mode works without it.*
 
-Sources: [PCGamesN on the Desktop Mode keyboard](https://www.pcgamesn.com/steam-deck/keyboard-desktop-mode) · [steam-for-linux#9099](https://github.com/ValveSoftware/steam-for-linux/issues/9099) · [gamescope#33 on XTEST under XWayland](https://github.com/ValveSoftware/gamescope/issues/33)
+Sources: [PCGamesN on the Desktop Mode keyboard](https://www.pcgamesn.com/steam-deck/keyboard-desktop-mode) · [steam-for-linux#9099 (invisible window blocks input)](https://github.com/ValveSoftware/steam-for-linux/issues/9099) · [steam-for-linux#10632 (Steam Input on Wayland)](https://github.com/ValveSoftware/steam-for-linux/issues/10632) · [SteamOS 3.8.10 release notes (Plasma 6.4.3, Wayland default)](https://www.opensourcefeed.org/steamos-3-8-10-release/)
