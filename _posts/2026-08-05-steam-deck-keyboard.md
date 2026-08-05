@@ -36,9 +36,9 @@ The keys aren't the interesting part — where the event is born is.
 Steam's OSK is a Steam client window whose input goes out through Steam Input's synthetic-input path, which on Linux is built on X11 (`XTEST`). Two practical consequences, neither of which is fixable from the outside:
 
 1. **Nothing to press.** The layout simply has no modifier keys on it. Whatever the injection path can do, you can't ask it for `Ctrl+C`.
-2. **It's Steam's, not the system's.** It lives and dies with the Steam client, and Steam Input's behaviour on Wayland sessions is patchy enough that a shim ([extest](https://gitlab.com/ancurio/extest)) exists purely to feed it the `XTEST` interface it expects.
+2. **It's Steam's, not the system's.** It lives and dies with the Steam client, and Steam Input's behaviour on Wayland sessions is patchy enough that a shim exists purely to feed Steam the `XTEST` interface it expects — [extest](https://github.com/Supreeeme/extest), which reimplements XTEST by creating uinput devices and is `LD_PRELOAD`ed into Steam. Worth noting where that lands: someone else independently concluded the fix was to stop synthesising X11 events and become a kernel device instead.
 
-Mine goes in a layer lower. `python-evdev` opens `/dev/uinput` and registers a virtual input device, then writes real keycodes into it. The kernel emits them via evdev, libinput picks them up, the compositor routes them to whatever holds focus. Nothing in userspace can tell it apart from a USB keyboard, so `Ctrl`, `Alt`, `Super`, `F1`–`F12`, `Tab`, `Esc` and the arrows work everywhere — X11 session or Wayland, XWayland client or native — including `Ctrl+C` in Konsole.
+Mine goes in a layer lower. [`python-evdev`](https://python-evdev.readthedocs.io/en/latest/) opens [`/dev/uinput`](https://www.kernel.org/doc/html/latest/input/uinput.html) and registers a virtual input device, then writes real keycodes into it. The kernel emits them via evdev, [libinput](https://wayland.freedesktop.org/libinput/doc/latest/) picks them up, the compositor routes them to whatever holds focus. Nothing in userspace can tell it apart from a USB keyboard, so `Ctrl`, `Alt`, `Super`, `F1`–`F12`, `Tab`, `Esc` and the arrows work everywhere — X11 session or Wayland, XWayland client or native — including `Ctrl+C` in Konsole.
 
 Cost of that approach: the process needs write access to `/dev/uinput`, i.e. membership of the `input` group and a udev rule. That's the whole reason the installer asks for a password once and then makes you log out.
 
@@ -48,7 +48,7 @@ Cost of that approach: the process needs write access to `/dev/uinput`, i.e. mem
 
 Three interception points:
 
-**1. The trigger.** On handhelds running InputPlumber (the SteamOS gamepad daemon), the hardware keyboard button is a gamepad button mapped to `Guide` + `North` — the chord Steam listens for. I take InputPlumber's current default profile, rewrite that one binding to emit a DBus event (`ui_osk`) instead, and load the modified profile over DBus per composite device:
+**1. The trigger.** On handhelds running [InputPlumber](https://github.com/ShadowBlip/InputPlumber) (the SteamOS gamepad daemon), the hardware keyboard button is a gamepad button mapped to `Guide` + `North` — the chord Steam listens for. I take InputPlumber's current default profile, rewrite that one binding to emit a DBus event (`ui_osk`) instead, and load the modified profile over DBus per [composite device](https://github.com/ShadowBlip/InputPlumber/blob/main/bindings/dbus-xml/org.shadowblip.Input.CompositeDevice.xml):
 
 ```bash
 busctl --system call org.shadowblip.InputPlumber "$dev" \
@@ -57,7 +57,7 @@ busctl --system call org.shadowblip.InputPlumber "$dev" \
 
 No keystroke is emitted, so nothing else in the system reacts to the button. The keyboard subscribes to that DBus signal and toggles itself. The remap is built by string-replacing the exact block in `/usr/share/inputplumber/profiles/default.yaml`; if the block doesn't match, the script bails rather than guessing.
 
-**2. The compositor.** A KWin script matches on window properties and sets opacity: `handheld-kbd` (our GTK `app_id`, set via `GLib.set_prgname`) to the configured value, default `0.72`; Steam's OSK to `0.0`.
+**2. The compositor.** A [KWin script](https://develop.kde.org/docs/plasma/kwin/) ([API reference](https://develop.kde.org/docs/plasma/kwin/api/)) matches on window properties and sets opacity: `handheld-kbd` (our GTK `app_id`, set via `GLib.set_prgname`) to the configured value, default `0.72`; Steam's OSK to `0.0`.
 
 ```javascript
 if (c.indexOf("handheld-kbd") !== -1) w.opacity = 0.72;
@@ -66,7 +66,7 @@ else if (cap.indexOf("Steam Input On-screen Keyboard") !== -1) w.opacity = 0.0;
 
 The script is regenerated from `config.json` at daemon start, and the daemon re-checks every ~3s that it's still loaded — the boot-time load loses the race against KWin startup often enough to matter.
 
-**3. The keys.** `/dev/uinput`, as above, with a 20 ms settle between press and release (`key_settle_ms`) so modifier combinations land in order.
+**3. The keys.** [`/dev/uinput`](https://www.kernel.org/doc/html/latest/input/uinput.html), as above, with a 20 ms settle between press and release (`key_settle_ms`) so modifier combinations land in order.
 
 ## The ghost window
 
@@ -76,7 +76,7 @@ Opacity `0.0` is invisible, not gone — a fully transparent window still sits t
 
 ![Opacity 0 is not gone](/assets/images/osk-ghost-window.png)
 
-So the hide key sets a latch, and the daemon `xdotool windowunmap`s Steam's OSK rather than just dimming it. Taps reach the app underneath again. The latch clears once the window is genuinely gone.
+So the hide key sets a latch, and the daemon has [`xdotool`](https://github.com/jordansissel/xdotool) `windowunmap` Steam's OSK rather than just dimming it. Taps reach the app underneath again. The latch clears once the window is genuinely gone.
 
 Two more failure modes worth naming, because both cost me an evening:
 
@@ -91,7 +91,7 @@ The daemon also watchdogs the keyboard process: its Wayland connection drops whe
 
 *Screenshot predates dropping `Home`/`End`, which are still visible in the bottom row.*
 
-Translucent, full key set, US/UK layout switching via a 🌐 key that flips KDE's XKB layout over `org.kde.KeyboardLayouts` DBus **and** re-skins the labels, so what's printed and what's typed stay in sync.
+Translucent, full key set, US/UK layout switching via a 🌐 key that flips KDE's XKB layout over [`org.kde.KeyboardLayouts`](https://invent.kde.org/plasma/kwin/-/blob/master/src/keyboard_layout.cpp) DBus **and** re-skins the labels, so what's printed and what's typed stay in sync.
 
 The transparency isn't decoration. A Steam Deck is 1280×800; a Legion Go 2 is 1920×1200. A full-width keyboard eats the bottom third either way, and on those panels there are no pixels to spare — so you need to read the terminal output or the form field you're typing into *through* the keys. Opacity defaults to `0.72` and is a number in `config.json`.
 
@@ -104,7 +104,7 @@ Two things deliberately absent:
 
 ## Install
 
-Desktop Mode, KDE Plasma 6, Wayland session (default from SteamOS 3.8.10; on 3.7 it's `steamos-session-select plasma-wayland-persistent`). Needs `python3`, `python-gobject` (GTK 3), `python-evdev`.
+Desktop Mode, KDE Plasma 6, Wayland session (default from SteamOS 3.8.10; on 3.7 it's `steamos-session-select plasma-wayland-persistent`). Needs `python3`, [`python-gobject`](https://pygobject.gnome.org/) (GTK 3) and [`python-evdev`](https://python-evdev.readthedocs.io/en/latest/).
 
 ```bash
 git clone https://github.com/AdamLovattDevOps/better-handheld-keyboard
@@ -114,7 +114,7 @@ cd better-handheld-keyboard
 
 Or double-click `Install Better Handheld Keyboard.desktop`. The log out is not optional — group membership for `input` is read at session start.
 
-There's an experimental gamescope-overlay path for Game Mode in the code, gated behind an env var. Desktop Mode is what I actually use it in.
+There's an experimental [gamescope](https://github.com/ValveSoftware/gamescope)-overlay path for Game Mode in the code, gated behind an env var. Desktop Mode is what I actually use it in.
 
 ---
 
