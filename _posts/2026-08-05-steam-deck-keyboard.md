@@ -91,7 +91,7 @@ The daemon also watchdogs the keyboard process: its Wayland connection drops whe
 
 ![Better Handheld Keyboard over Firefox](/assets/images/handheld-kbd-screenshot.png)
 
-*Screenshot predates dropping `Home`/`End`, which are still visible in the bottom row.*
+*Bottom row still shows `Home`/`End` — see below.*
 
 Translucent, full key set, US/UK layout switching via a 🌐 key that flips KDE's XKB layout over [`org.kde.KeyboardLayouts`](https://invent.kde.org/plasma/kwin/-/blob/master/src/keyboard_layout.cpp) DBus **and** re-skins the labels, so what's printed and what's typed stay in sync.
 
@@ -99,10 +99,12 @@ The transparency isn't decoration. A Steam Deck is 1280×800; a Legion Go 2 is 1
 
 Layout, theme, key sizes, opacity and geometry are plain JSON in `~/.config/handheld-kbd/`. Adding a key is a JSON object with a `label` and an evdev `key` name; unknown key names are skipped with a warning rather than taking the keyboard down.
 
-Two things deliberately absent:
+## Next revision
 
-- **Predictive text.** It never earned a row. Typing `git rebase --onto` doesn't want help.
-- **`Home` and `End`.** They widened the bottom row for navigation the arrow cluster and `PgUp`/`PgDn` already cover. Dropped from the current layout.
+On `master`, not yet in a tagged release:
+
+- **`Home` and `End` dropped from the full layout.** They widened the bottom row for navigation the arrow cluster and `PgUp`/`PgDn` already reach. Bottom row is now `Super`, `Alt`, `Space`, `PgUp`, `PgDn`, `Del`, arrows, locale.
+- **Still no predictive-text row, and no plans for one.** Word suggestion is guessing at input that's usually a path, a flag or a hostname.
 
 ## Install
 
