@@ -104,7 +104,7 @@ The bottom row is `Super`, `Alt`, `Space`, `PgUp`, `PgDn`, `Del`, arrows, locale
 Desktop Mode, KDE Plasma 6, Wayland session (default from SteamOS 3.8.10; on 3.7 it's `steamos-session-select plasma-wayland-persistent`). Needs `python3`, [`python-gobject`](https://pygobject.gnome.org/) (GTK 3) and [`python-evdev`](https://python-evdev.readthedocs.io/en/latest/).
 
 ```bash
-git clone -b v1.0.0 https://github.com/AdamLovattDevOps/better-handheld-keyboard
+git clone -b v1.0.1 https://github.com/AdamLovattDevOps/better-handheld-keyboard
 cd better-handheld-keyboard
 ./install.sh   # then log out and back in
 ```
@@ -113,8 +113,50 @@ Or double-click `Install Better Handheld Keyboard.desktop`. The log out is not o
 
 There's an experimental [gamescope](https://github.com/ValveSoftware/gamescope)-overlay path for Game Mode in the code, gated behind an env var. Desktop Mode is what I actually use it in.
 
+## Update: v1.0.0 took a Legion Go 1 user's keyboard away
+
+Within hours of release someone installed v1.0.0 on a **Legion Go 1** and ended up with no on-screen keyboard at all — not mine, not Steam's. Worth writing up, because the bug is a nice example of trusting a config file to describe hardware.
+
+The installer picked between the two trigger modes like this:
+
+```bash
+grep -q 'button: Keyboard' /usr/share/inputplumber/profiles/default.yaml
+```
+
+Reasonable-looking, completely wrong. That file is InputPlumber's **generic** default profile — it ships [the same `- name: Keyboard` mapping](https://github.com/ShadowBlip/InputPlumber/blob/main/rootfs/usr/share/inputplumber/profiles/default.yaml#L33-L41) on every device it supports. The grep answers "is InputPlumber installed", not "does this handheld have a keyboard button", so seamless mode got selected on hardware that can't drive it.
+
+The Legion Go 1 is exactly that hardware, and it's sneaky about it. Its InputPlumber driver *declares* the capability:
+
+```rust
+// src/input/source/hidraw/legion_go.rs
+Capability::Gamepad(Gamepad::Button(GamepadButton::Keyboard)),
+```
+
+but nothing ever emits it. The Go 1's event set is `Legion`, `QuickAccess`, `Y1`/`Y2`/`Y3`, `M2`/`M3`, `MouseClick` — no keyboard button. Compare the Go 2, which has a real one:
+
+```rust
+// src/input/source/hidraw/legion_go2.rs
+event::GamepadButtonEvent::ShowDesktop(value) => NativeEvent::new(
+    Capability::Gamepad(Gamepad::Button(GamepadButton::Keyboard)),
+```
+
+So we rebound a button that physically does not exist. Then the second mistake turned a dead trigger into a dead desktop: the KWin script was generated with **both** rules in every mode, so Steam's keyboard was still being forced to `opacity = 0.0` — the fallback was suppressed by the thing that had already failed.
+
+Why I never saw it: my Deck runs stock SteamOS, which doesn't ship InputPlumber, so the grep failed and it landed in mirror mode. My Go 2 has the button. The two devices I tested on were the two that couldn't reproduce it. The same trap catches a **Deck or ROG Ally under Bazzite or ChimeraOS** — neither driver references `GamepadButton::Keyboard` either.
+
+[v1.0.1](https://github.com/AdamLovattDevOps/better-handheld-keyboard/releases/tag/v1.0.1) fixes it four ways:
+
+- **Detect the device, not the config.** Seamless mode is now gated on DMI `product_name`. I deliberately didn't use InputPlumber's DBus `Capabilities` property either — the Go 1 advertises `Gamepad:Button:Keyboard` there too, so it would have reproduced the same false positive.
+- **Fail visible, not dark.** Steam's keyboard is only made transparent once mine is known to appear: mirror mode qualifies by definition, seamless mode waits for a stamp file the keyboard writes the first time it's really shown. A broken trigger now degrades to "the stock keyboard", which is where the user started.
+- **Fall back at runtime.** If the InputPlumber remap fails, the daemon drops to mirror mode for that session rather than leaving nothing.
+- **Fail loudly.** The remap script used to end in `|| exit 0`. It now reads the `ProfileName` property back after loading, warns when a device reports no keyboard button, and exits non-zero.
+
+Plus a `handheld-kbd-recover` script and a double-clickable launcher for it — because "just run this command" is poor advice for someone whose only input method you broke. Re-running the installer repairs the same thing.
+
+The lesson I'd keep: a capability advertised in a config file, or even over DBus, is a claim about software, not evidence about hardware. And when you suppress someone's fallback, make the suppression conditional on your replacement actually working.
+
 ---
 
-*Tested on a Steam Deck (1280×800) and a Legion Go 2 (1920×1200). The InputPlumber remap is the only device-specific part — it targets the Legion Go's keyboard button — and the default mirror mode works without it.*
+*Tested on a Steam Deck (1280×800) and a Legion Go 2 (1920×1200), and — since v1.0.1 — repaired on a Legion Go 1 by the user who found the bug. The InputPlumber remap is the only device-specific part; the default mirror mode works without it.*
 
 Sources: [PCGamesN on the Desktop Mode keyboard](https://www.pcgamesn.com/steam-deck/keyboard-desktop-mode) · [steam-for-linux#9099 (invisible window blocks input)](https://github.com/ValveSoftware/steam-for-linux/issues/9099) · [steam-for-linux#10632 (Steam Input on Wayland)](https://github.com/ValveSoftware/steam-for-linux/issues/10632) · [SteamOS 3.8.10 release notes (Plasma 6.4.3, Wayland default)](https://www.opensourcefeed.org/steamos-3-8-10-release/)
