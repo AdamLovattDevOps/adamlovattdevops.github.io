@@ -7,13 +7,15 @@ description: "Steam's OSK has no Ctrl, Alt or Esc, and it dies with Steam. I bui
 
 **TL;DR:** Steam's on-screen keyboard types letters fine, but it exposes no `Ctrl`, `Alt`, `Super`, `Esc` or F-keys at all, so no shortcut is reachable — and it only exists while Steam is running. I wrote a replacement that registers a virtual input device on `/dev/uinput` and remapped the hardware keyboard button to summon it. Code: [better-handheld-keyboard](https://github.com/AdamLovattDevOps/better-handheld-keyboard).
 
+![Steam's on-screen keyboard next to Better Handheld Keyboard](/assets/images/before-after-keyboard.png)
+
+*Left: [Pi My Life Up](https://pimylifeup.com/steam-deck-desktop-mode-keyboard/). Right: mine, typing into Firefox.*
+
 ## The stock keyboard
 
 Desktop Mode on a SteamOS handheld is a full KDE Plasma desktop — Plasma 6 since SteamOS 3.7, on Wayland by default since 3.8.10 (before that, X11 unless you switched it yourself). The only text input you get without plugging in USB is Steam's on-screen keyboard, summoned with `Steam + X`.
 
 ![Steam's on-screen keyboard in Desktop Mode, annotated](/assets/images/stock-steam-osk.png)
-
-*Screenshot: [Pi My Life Up](https://pimylifeup.com/steam-deck-desktop-mode-keyboard/), annotations mine.*
 
 The gaps aren't subtle:
 
