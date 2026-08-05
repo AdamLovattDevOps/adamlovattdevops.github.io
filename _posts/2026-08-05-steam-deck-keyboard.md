@@ -91,27 +91,20 @@ The daemon also watchdogs the keyboard process: its Wayland connection drops whe
 
 ![Better Handheld Keyboard over Firefox](/assets/images/handheld-kbd-screenshot.png)
 
-*Bottom row still shows `Home`/`End` — see below.*
-
 Translucent, full key set, US/UK layout switching via a 🌐 key that flips KDE's XKB layout over [`org.kde.KeyboardLayouts`](https://invent.kde.org/plasma/kwin/-/blob/master/src/keyboard_layout.cpp) DBus **and** re-skins the labels, so what's printed and what's typed stay in sync.
 
 The transparency isn't decoration. A Steam Deck is 1280×800; a Legion Go 2 is 1920×1200. A full-width keyboard eats the bottom third either way, and on those panels there are no pixels to spare — so you need to read the terminal output or the form field you're typing into *through* the keys. Opacity defaults to `0.72` and is a number in `config.json`.
 
 Layout, theme, key sizes, opacity and geometry are plain JSON in `~/.config/handheld-kbd/`. Adding a key is a JSON object with a `label` and an evdev `key` name; unknown key names are skipped with a warning rather than taking the keyboard down.
 
-## Next revision
-
-On `master`, not yet in a tagged release:
-
-- **`Home` and `End` dropped from the full layout.** They widened the bottom row for navigation the arrow cluster and `PgUp`/`PgDn` already reach. Bottom row is now `Super`, `Alt`, `Space`, `PgUp`, `PgDn`, `Del`, arrows, locale.
-- **Still no predictive-text row, and no plans for one.** Word suggestion is guessing at input that's usually a path, a flag or a hostname.
+The bottom row is `Super`, `Alt`, `Space`, `PgUp`, `PgDn`, `Del`, arrows, locale. No `Home`/`End` — they widened the row for navigation the arrow cluster and `PgUp`/`PgDn` already reach — and no predictive-text row, because the input here is usually a path, a flag or a hostname.
 
 ## Install
 
 Desktop Mode, KDE Plasma 6, Wayland session (default from SteamOS 3.8.10; on 3.7 it's `steamos-session-select plasma-wayland-persistent`). Needs `python3`, [`python-gobject`](https://pygobject.gnome.org/) (GTK 3) and [`python-evdev`](https://python-evdev.readthedocs.io/en/latest/).
 
 ```bash
-git clone https://github.com/AdamLovattDevOps/better-handheld-keyboard
+git clone -b v1.0.0 https://github.com/AdamLovattDevOps/better-handheld-keyboard
 cd better-handheld-keyboard
 ./install.sh   # then log out and back in
 ```
