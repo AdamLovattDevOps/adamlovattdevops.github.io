@@ -97,7 +97,7 @@ The transparency isn't decoration. A Steam Deck is 1280×800; a Legion Go 2 is 1
 
 Layout, theme, key sizes, opacity and geometry are plain JSON in `~/.config/handheld-kbd/`. Adding a key is a JSON object with a `label` and an evdev `key` name; unknown key names are skipped with a warning rather than taking the keyboard down.
 
-The bottom row is `Super`, `Alt`, `Space`, `PgUp`, `PgDn`, `Del`, arrows, locale. No `Home`/`End` — they widened the row for navigation the arrow cluster and `PgUp`/`PgDn` already reach — and no predictive-text row, because the input here is usually a path, a flag or a hostname.
+The bottom row is `Super`, `Alt`, `Space`, `PgUp`, `PgDn`, `Del`, arrows, locale. No `Home`/`End` — they widened the row for navigation the arrow cluster and `PgUp`/`PgDn` already reach.
 
 ## Install
 
