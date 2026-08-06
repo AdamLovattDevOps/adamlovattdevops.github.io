@@ -104,10 +104,12 @@ The bottom row is `Super`, `Alt`, `Space`, `PgUp`, `PgDn`, `Del`, arrows, locale
 Desktop Mode, KDE Plasma 6, Wayland session (default from SteamOS 3.8.10; on 3.7 it's `steamos-session-select plasma-wayland-persistent`). Needs `python3`, [`python-gobject`](https://pygobject.gnome.org/) (GTK 3) and [`python-evdev`](https://python-evdev.readthedocs.io/en/latest/).
 
 ```bash
-git clone -b v1.0.1 https://github.com/AdamLovattDevOps/better-handheld-keyboard
+git clone -b v1.0.10 https://github.com/AdamLovattDevOps/better-handheld-keyboard
 cd better-handheld-keyboard
 ./install.sh   # then log out and back in
 ```
+
+Or grab the [latest release](https://github.com/AdamLovattDevOps/better-handheld-keyboard/releases/latest) — the archives there bundle the optional suggestion filter, which a clone doesn't.
 
 Or double-click `Install Better Handheld Keyboard.desktop`. The log out is not optional — group membership for `input` is read at session start.
 
@@ -154,6 +156,33 @@ Why I never saw it: my Deck runs stock SteamOS, which doesn't ship InputPlumber,
 Plus a `handheld-kbd-recover` script and a double-clickable launcher for it — because "just run this command" is poor advice for someone whose only input method you broke. Re-running the installer repairs the same thing.
 
 The lesson I'd keep: a capability advertised in a config file, or even over DBus, is a claim about software, not evidence about hardware. And when you suppress someone's fallback, make the suppression conditional on your replacement actually working.
+
+## Update: hiding Steam's keyboard cost the Deck its trackpads
+
+A second report, and a better bug. On a Deck the keyboard came up fine but was **touch only** — moving a trackpad produced nothing, and the stick cursor was gone too. Only a Steam restart brought them back.
+
+Mirror mode is the cause, or rather what mirror mode does to Steam's keyboard. On a stock Deck the trigger is Steam's own on-screen keyboard appearing; the KWin script sees that window map, summons mine, and hides Steam's:
+
+```js
+if (cap.indexOf("Steam Input On-screen Keyboard") !== -1) w.opacity = 0.0;
+```
+
+Invisible, but still mapped. Steam has no idea it's invisible, and while Steam believes its keyboard is open it reassigns the controller. From its own log:
+
+```
+Set OSK active 1 and appid 413080
+OnFocusWindowChanged On Screen Keyboard Forcing to window type: KB ActionSet, AppID 769
+```
+
+In the `KB ActionSet`, the sticks and trackpads navigate Steam's keyboard instead of moving the desktop pointer. They were working perfectly — driving a keyboard nobody could see.
+
+What made this expensive to find was how convincingly it pointed elsewhere. A bare `uinput` device emitting one keystroke, with no window and no KWin script, appeared to reproduce it; disabling focus restore and fullscreen lifting changed nothing; the fix looked like it had to be [`wlr-layer-shell`](https://wayland.app/protocols/wlr-layer-shell-unstable-v1) or the [virtual-keyboard protocol](https://wayland.app/protocols/virtual-keyboard-unstable-v1), neither of which SteamOS ships. I'd written most of a "this may not be fixable on the Deck" reply.
+
+The measurement that killed all of it: XTEST, which is how Steam moves the pointer, worked in every state. Keyboard hidden, shown, after typing — `xdotool mousemove_relative` moved the cursor every time. The pointer path was never broken. Steam had just stopped driving it, which meant the answer was in Steam's state, not in the input stack. Then the log said it outright.
+
+[v1.0.10](https://github.com/AdamLovattDevOps/better-handheld-keyboard/releases/tag/v1.0.10) closes Steam's keyboard rather than hiding it. Steam sets OSK-active back to 0, reloads the desktop controller config, and the pads are yours again. Closing it does mean Steam no longer reports the second button press as a close, so the hardware button is handled as a toggle in the compositor instead of mirroring Steam's show and hide.
+
+The lesson, which is roughly the same one as last time: a window you've made invisible is still a window, and the process that owns it is still reasoning about it.
 
 ---
 
