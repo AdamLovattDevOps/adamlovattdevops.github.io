@@ -31,7 +31,7 @@ Many organisations have legacy hardware. Not because they want it, but because r
 
 **Data centres.** Hyperscalers like AWS and Google decommission server hardware on three-to-five-year cycles. Not because it fails — because the software stack moves on. Newer frameworks demand newer instruction sets, newer kernel features, newer everything. Perfectly functional compute ends up recycled or scrapped because optimising software for older silicon isn't worth the engineering time.
 
-In every case, the bottleneck is the same: software, not hardware.
+In many cases, the bottleneck is the same: software, not hardware.
 
 ## What AI Changes
 

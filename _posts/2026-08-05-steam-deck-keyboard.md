@@ -229,4 +229,6 @@ The through-line, if there is one: I couldn't verify this by looking at it, so I
 
 *Tested on a Steam Deck (1280×800) and a Legion Go 2 (1920×1200), and — since v1.0.1 — repaired on a Legion Go 1 by the user who found the bug. The InputPlumber remap is the only device-specific part; the default mirror mode works without it.*
 
+*Every release since, and what broke in each: [release history](/handheld-keyboard-changelog/).*
+
 Sources: [PCGamesN on the Desktop Mode keyboard](https://www.pcgamesn.com/steam-deck/keyboard-desktop-mode) · [steam-for-linux#9099 (invisible window blocks input)](https://github.com/ValveSoftware/steam-for-linux/issues/9099) · [steam-for-linux#10632 (Steam Input on Wayland)](https://github.com/ValveSoftware/steam-for-linux/issues/10632) · [SteamOS 3.8.10 release notes (Plasma 6.4.3, Wayland default)](https://www.opensourcefeed.org/steamos-3-8-10-release/)
