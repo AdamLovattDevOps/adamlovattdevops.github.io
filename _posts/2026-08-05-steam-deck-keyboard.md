@@ -104,7 +104,7 @@ The bottom row is `Super`, `Alt`, `Space`, `PgUp`, `PgDn`, `Del`, arrows, locale
 Desktop Mode, KDE Plasma 6, Wayland session (default from SteamOS 3.8.10; on 3.7 it's `steamos-session-select plasma-wayland-persistent`). Needs `python3`, [`python-gobject`](https://pygobject.gnome.org/) (GTK 3) and [`python-evdev`](https://python-evdev.readthedocs.io/en/latest/).
 
 ```bash
-git clone -b v1.0.10 https://github.com/AdamLovattDevOps/better-handheld-keyboard
+git clone -b v1.0.11 https://github.com/AdamLovattDevOps/better-handheld-keyboard
 cd better-handheld-keyboard
 ./install.sh   # then log out and back in
 ```
@@ -183,6 +183,47 @@ The measurement that killed all of it: XTEST, which is how Steam moves the point
 [v1.0.10](https://github.com/AdamLovattDevOps/better-handheld-keyboard/releases/tag/v1.0.10) closes Steam's keyboard rather than hiding it. Steam sets OSK-active back to 0, reloads the desktop controller config, and the pads are yours again. Closing it does mean Steam no longer reports the second button press as a close, so the hardware button is handled as a toggle in the compositor instead of mirroring Steam's show and hide.
 
 The lesson, which is roughly the same one as last time: a window you've made invisible is still a window, and the process that owns it is still reasoning about it.
+
+## Update: twenty languages, and how to know they're right
+
+[v1.0.11](https://github.com/AdamLovattDevOps/better-handheld-keyboard/releases/tag/v1.0.11) adds key labels for twenty layouts — English (US/UK), German, French, Spanish and Latin-American Spanish, Italian, Portuguese and Brazilian, Dutch, Polish, Turkish, Russian, Ukrainian, Greek, Arabic, Hebrew, Hindi, Thai and Vietnamese — plus an AltGr key, because most non-English layouts keep a third of their characters on the third level and without it Polish `ą` and Italian `[` were simply unreachable.
+
+The labels are the whole feature, and that's the awkward part. The keyboard injects real keycodes, so what a key *types* was always decided by the OS layout: selecting Russian typed Cyrillic correctly while the keyboard drew `q` on the key that produces `й`. The gap was never in typing. It was the keyboard refusing to admit what the OS was doing.
+
+Which raises the obvious problem. I can proofread Latin, and squint at Cyrillic and Greek. I cannot proofread Arabic, Hebrew, Devanagari or Thai, and "looks plausible" in a script you can't read is worth nothing.
+
+So none of it is hand-written. `tools/build-locales.py` generates the labels from [xkeyboard-config](https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config)'s symbol files and xorgproto's `keysymdef.h` — the same data the OS uses. Writing a parser for that surfaced three bugs, each of which produced a layout that looked fine and was wrong:
+
+- **Braces inside comments.** These files annotate keys with what they produce: `key <AB03> {[...]};  // ؤ }`. My block scanner counted that `}`, so Arabic ended after three keys and quietly lost the other seven — an Arabic keyboard with `v b n m` in Latin.
+- **Deprecated keysym aliases.** Resolution went through each name's `U+` comment, but several names share a code and only one carries it; the rest read *"deprecated alias for guillemetleft (misspelling)"*. That lost `masculine` and `guillemotleft` — and since a key whose *first* level doesn't resolve gets dropped entirely, Spanish lost its `º` key outright rather than just a label.
+- **Type declarations.** `key <AD08> { type[group1] = "FOUR_LEVEL_ALPHABETIC", [ i, I ] }` — that first bracket isn't a symbol list. Taking it lost Turkish's dotted and dotless `i`, which is the one character Turkish cannot afford to lose.
+
+Three silent wrong-layout bugs is enough to stop trusting the parser, so every label is checked against a different implementation: `xkbcli compile-keymap`, i.e. libxkbcommon, which is what the compositor itself will use. 940 key/level pairs across the twenty, zero mismatches, re-run in CI on every push.
+
+That's still only agreement between two descriptions of a keyboard. So each language also gets typed: switch the OS layout, open Kate, type that language's pangram through `/dev/uinput` using key positions read from the shipped locale data, press Ctrl+S, and compare the saved file byte for byte.
+
+```
+Съешь же ещё этих мягких французских булок да выпей чаю
+نص حكيم له سر قاطع وذو شأن عظيم
+Pijamalı hasta yağız şoföre çabucak güvendi
+```
+
+Two things fell out of that which no amount of reading the data would have found.
+
+**With only non-Latin layouts loaded, `Ctrl+S` stops working.** Every save under `ru ua gr ara` silently did nothing. Application shortcuts are bound to Latin keysyms, so under a Cyrillic keymap the S key produces `Cyrillic_yeru` and Kate's Save never fires — `Ctrl+C` and `Ctrl+V` go the same way. KDE's Latin fallback covers global shortcuts, not an application's own. Adding `us` to the group made all four pass unchanged. Since only four layouts can be live at once, that's a choice a user can get wrong, so the picker warns.
+
+**One character out of twenty languages went in and didn't come back.** I'd appended each layout's currency symbols to its pangram, because most sit on AltGr and it's a cheap way to exercise the new key. Russian `₽` vanished:
+
+```
+key <AE08>  { [ 8, asterisk, U20BD, NoSymbol ] };   # rouble on level 3
+key <RALT>  { [ Alt_R ] };                          # …and nothing reaches level 3
+```
+
+The label matched the keymap perfectly. The keymap was making a promise it couldn't keep — a layout can define third-level symbols and bind no AltGr switch. So the generator now only emits level-3 labels for layouts that provide one, and CI fails a locale that claims otherwise.
+
+Also worth knowing: **only four layouts can be live at once.** That's the keymap format, not a setting — ask libxkbcommon for a fifth and it says `Unrecognized RMLVO layout "es" was ignored`. Twenty sets of labels ship; which four are in rotation is a tray-menu checklist and a logout.
+
+The through-line, if there is one: I couldn't verify this by looking at it, so I had to build something that could. That turned out to be worth more than the feature.
 
 ---
 
