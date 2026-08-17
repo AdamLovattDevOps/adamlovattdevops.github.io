@@ -478,11 +478,8 @@ next person holding it might not either.
 
 ## Coda
 
-Somewhere in the 275.8-second verified playthrough, Eminem punches a doctor
-six times — 1.5 health, 0.25 a punch, the arithmetic is now correct — while
-the walk cycle plays backwards, because moonwalking was in the original's
-movement flags and now it's in the port's. Nobody will ever need this. Almost
-nobody wanted the game the first time. That was never the question. The
+Nobody needs this port. Almost nobody wanted the game the first time.
+That was never the question. The
 question was whether a piece of 2009, silly as it is, outlives the hardware
 it was chained to — and whether one person with an AI can now do for the
 unloved what whole communities used to do for the beloved.
