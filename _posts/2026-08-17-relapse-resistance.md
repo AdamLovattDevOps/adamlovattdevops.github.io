@@ -7,6 +7,15 @@ published: false
 ---
 
 
+**TL;DR:** I used AI to tear down a delisted, undocumented 2009 mobile
+game — dead file format, dead hardware, no tooling support — and rebuild it
+as a native port that will outlive every device that could run the
+original. The game itself is a curiosity. The point is what the exercise
+demonstrates: reverse engineering has stopped being expensive, which
+changes who can do software preservation, how much of our digital culture
+might actually survive, and how long yesterday's DRM keeps meaning
+anything. If the binaries exist, AI can and will take them apart.
+
 In 2009, Eminem's comeback album *Relapse* got the full promotional
 apparatus: singles, a horror-styled video campaign, and — announced by
 tweet, released on album day for $2.99 — an iPhone game. Six levels,
