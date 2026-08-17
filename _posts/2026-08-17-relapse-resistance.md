@@ -453,9 +453,7 @@ apart.** Decrypt the weak stuff, strip the protection, recover the formats,
 port the lot. Not tomorrow and not all at once, but monotonically — every
 artifact that survives in binary form is on a conveyor belt toward
 legibility, and nothing on the protection side of the ledger compounds the
-way the analysis side does. Real cryptography holds; your TLS session is
-fine. But DRM was never cryptography in that sense. It was economics plus
-obscurity, and both inputs are collapsing.
+way the analysis side does.
 
 For preservation this is straightforwardly liberating, and this project is
 the demonstration. The alternative was watching the last armv6 iPhone die.
