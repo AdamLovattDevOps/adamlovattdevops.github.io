@@ -117,10 +117,11 @@ digital culture as you could design on purpose.
 
 ## The fifteen-year hunt
 
-None of this starts with me. It starts with the YouTube creator
-[COBYSUCKS!](https://www.youtube.com/watch?v=sv6y-zlXtlg), whose documentary
-*The 15 Year Hunt For The Lost Eminem Game* records how a chain of
-volunteers dragged *Relapse: Resistance* back from the edge of lost media.
+None of this starts with me. It starts with a YouTube documentary,
+[*The 15 Year Hunt For The Lost Eminem
+Game*](https://www.youtube.com/watch?v=sv6y-zlXtlg), which records how a
+chain of volunteers dragged *Relapse: Resistance* back from the edge of
+lost media.
 The short version: the IPA surfaced anonymously on
 [archive.org](https://archive.org/details/relapse-1.0.0) in July 2024 and
 sat unnoticed for months. When it was finally found, the game's framework
@@ -129,9 +130,10 @@ forcing everything onto period hardware — a six-hour guided jailbreak of an eB
 chip that nearly ended the whole project, a defunct screen-mirroring
 utility brought back from the grave by spotting a broken domain prefix in
 a URL, strangers donating decade-old hardware to the cause. If you have
-any affection for a lost-media quest, watch the documentary — the people
-who made each step happen are thanked properly there, and the full story
-is better told at video length than I can manage here.
+any affection for a lost-media quest, [watch the
+documentary](https://www.youtube.com/watch?v=sv6y-zlXtlg) — the people who
+made each step happen are credited there, and the full story is better
+told at video length than I can manage here.
 
 That is what software preservation actually looks like: unglamorous,
 contingent, and absurdly disproportionate to the artifact — years of
@@ -487,9 +489,9 @@ question was whether a piece of 2009, silly as it is, outlives the hardware
 it was chained to — and whether one person with an AI can now do for the
 unloved what whole communities used to do for the beloved.
 
-It does, and they can. Thanks to COBYSUCKS! and every volunteer in his
-documentary's chain — they spent fifteen years proving this thing was worth
-saving, so that the saving could take a few weeks. Go watch it.
+It does, and they can. The volunteers in that fifteen-year chain proved
+this thing was worth saving, so that the saving could take a few weeks.
+[Go watch the documentary](https://www.youtube.com/watch?v=sv6y-zlXtlg).
 
 ---
 
