@@ -30,10 +30,11 @@ fighting his way out of a psychiatric rehab facility, and the things
 standing between you and the exit are the patients. You punch them — and
 the orderlies, and the doctors — to earn "will power points". At 400
 points a 9mm materialises. At 1200, an M16. If your tolerance meter fills,
-the screen says **YOU RELAPSED** and you start again. It is wild that this
-existed as an official, label-adjacent product, even in 2009 — a year with
-a considerably higher tolerance for this sort of thing. File that away; it
-turns out to matter for the preservation question, not just the taste one.
+the screen says **YOU RELAPSED** and you start again. It is, in short, a
+deeply strange object: an official, label-adjacent product with the logic
+of a fever dream, very much of a year when the App Store would approve a
+taser-noise app and nobody blinked. File that strangeness away; it turns
+out to matter for the preservation question, not just the curiosity one.
 
 Meanwhile, its very unloveliness is what makes it the right specimen. This
 is panning for digital gold in a river nobody else would stand in — and
@@ -389,11 +390,11 @@ Flash took a whole medium with it; every dead platform strands a generation
 of work, and the overwhelming majority of it — almost certainly the vast
 majority of all digital art ever made — will simply not survive, because
 survival currently depends on someone caring at exactly the right moment.
-And some of it will be lost on purpose: a game this far on the wrong side
-of taste is exactly the kind of asset a rights holder quietly prefers
-forgotten. Embarrassment is a preservation risk in its own right — nobody
-files a takedown against their proudest work — and deliberate forgetting
-is still forgetting. There is no legal deposit library for mobile
+And some of it will be lost on purpose: a product this strange, this far
+from how its rights holder wants to be remembered, is exactly the kind of
+asset that gets quietly left to rot. Embarrassment is a preservation risk
+in its own right — nobody works to keep their oddities online — and
+deliberate forgetting is still forgetting. There is no legal deposit library for mobile
 software. No institution was ever coming for *Relapse: Resistance*. The people who led this charge were
 an anonymous uploader, a fan who got curious, a jailbreaker with a free
 evening, and a YouTuber — volunteers, every one, doing institutional work
