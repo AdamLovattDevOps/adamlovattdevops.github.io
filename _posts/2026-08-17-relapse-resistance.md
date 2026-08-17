@@ -82,24 +82,13 @@ never makes it out alive." (The blurb says Nurses; the code says Doctors.
 Even the marketing copy and the enemy table disagree.)
 
 A week after launch, the same blog post promised version 1.1: longer
-levels, smarter AI, a more responsive Eminem, a skippable intro, and — the
-good part — "a two by four for orderly smacking goodness". Here is where
-the archaeology gets satisfying: that 2-by-4, the weapon in the
-*announcement screenshot*, is sitting in the shipped binary's weapon table
-right now — `TwoByFour`, range 0.5, damage 0.35, between the fist and the
-handgun — and the shipped game has no way to give it to you. Only the 9mm
-and the M16 ever drop, and nothing in the decompiled code ever clones the
-`TwoByFour` entry: enemies, whatever their sprite art is drawn swinging,
-all attack with the table's `Syringe` entry. It was cut between the
-announcement and launch, its stats left behind in the code, then promised
-back for 1.1.
+levels, smarter AI, a more responsive Eminem and a skippable intro. And
+when you finish the game, the ending video closes on three words in
+scratched grindhouse type: **TO BE CONTINUED…** — I pulled that frame out
+of the shipped `end.m4v` myself.
 
 ![Level 2 in the 2009 capture and in the port's Windows build: same
-elevators, same chair, same patient swinging a plank — while the code
-underneath attacks with the Syringe entry](/assets/images/cmp_combat.png) And when you
-finish the game, the ending video closes on three words in scratched
-grindhouse type: **TO BE CONTINUED…** — I pulled that frame out of the
-shipped `end.m4v` myself.
+elevators, same chair, same enemy mid-swing](/assets/images/cmp_combat.png)
 
 None of it happened — as far as anyone can prove. The game vanished from
 the App Store not long after launch and took the whole plan with it. No
