@@ -105,41 +105,25 @@ digital culture as you could design on purpose.
 
 None of this starts with me. It starts with the YouTube creator
 [COBYSUCKS!](https://www.youtube.com/watch?v=sv6y-zlXtlg), whose documentary
-*The 15 Year Hunt For The Lost Eminem Game* records how a group of
-preservationists dragged *Relapse: Resistance* back from the edge of lost
-media. The chain of custody deserves listing in full, because my project is a
-link in it, not the origin of it:
+*The 15 Year Hunt For The Lost Eminem Game* records how a chain of
+volunteers dragged *Relapse: Resistance* back from the edge of lost media.
+I'm not going to recount the cast or the plot here, because if you have any
+affection at all for a lost-media quest you should watch it cold — it has
+everything the genre owes you. An IPA surfacing anonymously on
+[archive.org](https://archive.org/details/relapse-1.0.0) in July 2024 and
+sitting unnoticed for months. A framework that died with iOS 9, forcing
+everything onto period hardware. A six-hour guided jailbreak of an eBay
+iPhone 3G. A dead Wi-Fi chip that nearly ended the whole project. A defunct
+screen-mirroring utility brought back from the grave by spotting a broken
+domain prefix in a URL. Strangers donating decade-old hardware to the cause.
 
-- An anonymous user, **mr6**, uploaded the IPA to [archive.org](https://archive.org/details/relapse-1.0.0) in July 2024,
-  from a throwaway account, where it sat unnoticed for months.
-- An Eminem fan, **Shady fan**, found it by coincidence and started pulling
-  assets out.
-- **Hunter** deconstructed the 41.7 MB `.ipa` and established the bad news:
-  the game's framework died with iOS 9. Running it would mean period hardware.
-- COBYSUCKS! bought an iPhone 3G on eBay with no jailbreaking experience;
-  **Maxine** spent six-plus hours walking him through the install.
-- The 3G's Wi-Fi chip turned out to be dead — a hardware failure that nearly
-  ended the project — until **lgd**, the jailbreak app's developer, pointed
-  out that OpenSSH was already bundled inside his app.
-- Screen recording didn't exist before iOS 11, Apple's old AV cables produced
-  audio and no video, and the defunct "TV out" utility they needed depended
-  on a web view controller file that was still online behind a broken domain
-  prefix. lgd again: correct the prefix, mirror the game to a TV.
-- **Austin** of Elite Obsolete Electronics shipped a refurbished iPod Touch
-  5G and HDMI adapters, free, to help capture it.
-- **Weirdo** became the first archivist to play and upload new footage, on an
-  iPad 2 running iOS 6, and **The Connoisseur** got around the hardware
-  recording constraints with a jailbroken screen recorder.
-
-Read that list back. Six hours of guided jailbreaking, a dead Wi-Fi chip, a
-domain typo standing between the project and failure, donated decade-old
-hardware — all of it to get a bad album tie-in running long enough to point a
-camera at it. This is what software preservation actually looks like:
-unglamorous, contingent, and absurdly disproportionate to the artifact.
-Nobody on that list stopped to ask whether the game deserved it, and that is
-the correct attitude. Preservation that only saves the good stuff isn't
-preservation, it's curation, and the culture of 2009 includes its marketing
-sludge whether we like it or not.
+That is what software preservation actually looks like: unglamorous,
+contingent, and absurdly disproportionate to the artifact — years of
+volunteer effort to get a bad album tie-in running long enough to point a
+camera at it. And at no point does anyone in that story stop to ask whether
+the game deserved it, which is the correct attitude. Preservation that only
+saves the good stuff isn't preservation, it's curation, and the culture of
+2009 includes its marketing sludge whether we like it or not.
 
 ## Life support has a clock on it
 
@@ -469,10 +453,9 @@ question was whether a piece of 2009, silly as it is, outlives the hardware
 it was chained to — and whether one person with an AI can now do for the
 unloved what whole communities used to do for the beloved.
 
-It does, and they can. Thanks to mr6, Shady fan, Hunter, Maxine, lgd,
-Austin, Weirdo, The Connoisseur, and COBYSUCKS! — who spent fifteen years
-proving this thing was worth saving, so that the saving could take a few
-weeks.
+It does, and they can. Thanks to COBYSUCKS! and every volunteer in his
+documentary's chain — they spent fifteen years proving this thing was worth
+saving, so that the saving could take a few weeks. Go watch it.
 
 ---
 
