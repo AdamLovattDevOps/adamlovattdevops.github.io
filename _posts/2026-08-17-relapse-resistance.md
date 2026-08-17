@@ -69,8 +69,8 @@ OpenGL ES a bonus. That listing is effectively this game's build manifest —
 it describes the exact stack the teardown later fell out of.
 
 The launch beat was real, if brief. On May 3, 2009 Eminem tweeted "Relapse
-iPhone game coming along nicely" with a screenshot: a buff mini-Em wielding
-a **2-by-4** at a bloody-faced zombie in a decrepit lobby. [MTV News picked
+iPhone game coming along nicely" with a screenshot: a buff mini-Em squaring
+up to a bloody-faced zombie in a decrepit lobby. [MTV News picked
 it up](https://web.archive.org/web/20221220013255/https://www.mtv.com/news/ao3j50/eminem-readying-relapse-iphone-game) two days later; [Pocket Gamer covered it](https://web.archive.org/web/20260817174903/https://www.pocketgamer.com/relapse/eminem-resurfaces-with-iphone-game/) the day after that and
 wondered whether Apple would even approve it, the App Store having recently
 rejected a Nine Inch Nails app for "objectionable content". Apple approved
