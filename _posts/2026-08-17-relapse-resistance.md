@@ -160,6 +160,11 @@ archive.org IPA (md5 `d3ef1baa8a2e15264b3ca62f725adcab`, verified against the
 upload) and a native port: C++17, SDL2, OpenGL 3.3, one binary, no
 third-party asset libraries.
 
+![The pipeline: three ground truths out of the IPA — serialized data,
+decompiled C#, the binary's own string table — feeding the extractors, the
+pack tools and the engine, with the e2e bot closing the
+loop](/assets/images/pipeline-architecture.png)
+
 ## The format nobody could read
 
 Here is where it gets properly low-level, because the first wall is a good
