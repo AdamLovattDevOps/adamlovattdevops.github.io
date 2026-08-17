@@ -20,10 +20,14 @@ In 2009, Eminem's comeback album *Relapse* got the full promotional
 apparatus: singles, a horror-styled video campaign, and — announced by
 tweet, released on album day for $2.99 — an iPhone game. Six levels,
 41.7 MB, built by a small Florida contract studio in the App Store's first
-year. Let me be clear about the artifact we are dealing with here: this
-game is not good. It was not good in 2009. It is a promotional tie-in with
-a walk cycle, it was delisted within weeks, and almost nobody played it
-then or has thought about it since.
+year, on a marketing deadline. You don't need my opinion of it, because
+2009 left one on record: the sole contemporary review that survives — and
+the fact that only one survives is its own data point — declared it
+["literally the worst game I have ever been subjected to in my entire
+life"](https://web.archive.org/web/20221129152921/https://thekoalition.com/reviews/eminem-relapse-the-game-review),
+while a launch-week blog post settled for "Relapse = FAIL". It was
+delisted within weeks, and almost nobody played it then or has thought
+about it since.
 
 The premise, when you reach it, takes some easing into. You play Eminem
 fighting his way out of a psychiatric rehab facility, and the things
@@ -121,7 +125,7 @@ is better told at video length than I can manage here.
 
 That is what software preservation actually looks like: unglamorous,
 contingent, and absurdly disproportionate to the artifact — years of
-volunteer effort to get a bad album tie-in running long enough to point a
+volunteer effort to get an obscure album tie-in running long enough to point a
 camera at it. And at no point does anyone in that story stop to ask whether
 the game deserved it, which is the correct attitude. Preservation that only
 saves the good stuff isn't preservation, it's curation, and the culture of
@@ -348,7 +352,7 @@ game runs on.
 
 Hold the two halves next to each other.
 
-On one side: a bad six-level advergame where Eminem punches hospital
+On one side: a six-level advergame where Eminem punches hospital
 patients, shipped to sell an album, with a stubbed-out loading screen and a
 bug that rolls the credits if you walk left. Nobody played it. On the other:
 a frontier AI system reconstructing an undocumented seventeen-year-old
