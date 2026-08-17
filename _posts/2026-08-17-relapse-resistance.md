@@ -36,9 +36,9 @@ of a fever dream, very much of a year when the App Store would approve a
 taser-noise app and nobody blinked. File that strangeness away; it turns
 out to matter for the preservation question, not just the curiosity one.
 
-Meanwhile, its very unloveliness is what makes it the right specimen. This
-is panning for digital gold in a river nobody else would stand in — and
-the pan, this time, was AI.
+Meanwhile, its very unloveliness is what makes it the right specimen: no
+community was ever going to do this work, so it's a clean test of what one
+person and an AI can manage alone.
 The game is now fully extracted, decompiled, audited method by method, and
 reimplemented as a native C++ port that runs on Linux, Windows, Android
 and — cross-compiled from Linux with no Mac in sight — iOS. It will outlive
