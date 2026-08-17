@@ -86,10 +86,19 @@ finish the game, the ending video closes on three words in scratched
 grindhouse type: **TO BE CONTINUED…** — I pulled that frame out of the
 shipped `end.m4v` myself.
 
-None of it happened. No 1.1, no continuation, no sequel. The game vanished
-from the App Store within weeks of release and took the whole plan with
-it. A "to be continued" in a delisted binary is about as clean a monument
-to abandoned digital culture as you could design on purpose.
+None of it happened — as far as anyone can prove. The game vanished from
+the App Store within weeks of release and took the whole plan with it. No
+continuation, no sequel; and whether 1.1 itself ever landed is now
+unknowable in an instructive way. The one binary that survives is 1.0 —
+the archive.org item is literally named `relapse-1.0.0`. If an update did
+ship in the game's few weeks on the store, nobody kept a copy, and the
+App Store keeps no public record of version history for software it has
+delisted. So the promised patch is either vapour or lost media nested
+inside lost media — a version of a game nobody preserved, of which we
+cannot even establish the existence. That is how thin the record gets,
+sixteen years out, for anything that lived only in a storefront. A "to be
+continued" in a delisted binary is about as clean a monument to abandoned
+digital culture as you could design on purpose.
 
 ## The fifteen-year hunt
 
