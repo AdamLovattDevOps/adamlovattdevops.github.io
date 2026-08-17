@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "If the Binaries Exist: Porting the Lost Eminem Game Nobody Asked For"
+title: "If the Binaries Exist: Rescuing a Lost 2009 Mobile Game Nobody Played"
 date: 2026-08-17
-description: "A 2009 advergame, a fifteen-year community hunt, an AI-assisted teardown of an undocumented Unity format, and what it means when reverse engineering stops being expensive."
+description: "An obscure delisted advergame, a fifteen-year community hunt, an AI-assisted teardown of an undocumented Unity format — and the question of how much digital culture will actually be preserved, and by whom."
 published: false
 ---
 
@@ -305,6 +305,23 @@ demonstrates, in a small way, is that the economics have flipped. The
 cathedral treatment now costs one person a few weeks, so the janky ad gets
 the cathedral treatment — and "is it worth it?" stops being a technical
 question at all.
+
+So ask the non-technical version honestly: should anyone bother preserving
+what is essentially an advertisement? I think the question contains its own
+answer, because *nobody knows in advance*. Nobody in 2009 flagged this game
+as culturally significant — it took fifteen years for anyone to notice it
+was gone. The App Store has delisted software by the hundreds of thousands;
+Flash took a whole medium with it; every dead platform strands a generation
+of work, and the overwhelming majority of it — almost certainly the vast
+majority of all digital art ever made — will simply not survive, because
+survival currently depends on someone caring at exactly the right moment.
+There is no legal deposit library for mobile software. No institution was
+ever coming for *Relapse: Resistance*. The people who led this charge were
+an anonymous uploader, a fan who got curious, a jailbreaker with a free
+evening, and a YouTuber — volunteers, every one, doing institutional work
+with none of the mandate and none of the budget. If that's who leads, then
+the thing that changes the percentage isn't more institutions. It's
+dropping the cost of the work until the volunteers can afford everything.
 
 ## What happens when this scales
 
