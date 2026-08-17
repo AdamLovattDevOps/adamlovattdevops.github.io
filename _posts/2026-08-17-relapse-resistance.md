@@ -7,9 +7,10 @@ published: false
 ---
 
 
-In 2009, to promote the album *Relapse*, someone shipped an iPhone game in
-which Eminem walks through a psychiatric hospital punching patients, orderlies
-and doctors to earn "will power points". At 400 points a 9mm materialises. At
+In 2009, to promote the album *Relapse*, a small Florida contract studio
+shipped a $2.99 iPhone game in which Eminem walks through a psychiatric
+hospital punching patients, orderlies and doctors to earn "will power
+points". At 400 points a 9mm materialises. At
 1200, an M16. If your tolerance meter fills, the screen says **YOU RELAPSED**
 and you start again. Six levels. 41.7 MB. Let me be clear about the artifact
 we are dealing with here: this game is not good. It was not good in 2009. It
@@ -26,6 +27,52 @@ every device that could ever run the original. The gap between what this
 thing *is* and what it took to save it is the story, and I don't think the
 implications stop at novelty promo games.
 
+## Popsomp Hills, $2.99, and the sequel that never came
+
+The game was credited to "Shady Games and DS Media Labs" — the former
+presumably the artist-side label (the bundle ID is
+`com.shadygames.Relapse`), the latter a real and traceable studio. DS Media
+Labs, Inc. was a four-partner iPhone contract shop working out of the West
+Palm Beach area, and their [archived blog](https://web.archive.org/web/20090828032318/http://www.dsmedialabs.com/blog.php) reads like a core sample of the
+early App Store: a taser-noise app (*Stun-O-Matic*), a light-cycles clone
+(*Light Riders*), *FLOverload*, a *Fall Out Boy All Access* app, and — a few
+months after Relapse — *Ramp Champ*, a genuinely well-regarded skeeball game
+built with The Iconfactory. In mid-2009 they posted a job listing for a 3D
+developer: "Unity 3D, Mathematics, C# and the Mono/.NET frameworks",
+OpenGL ES a bonus. That listing is effectively this game's build manifest —
+it describes the exact stack the teardown later fell out of.
+
+The launch beat was real, if brief. On May 3, 2009 Eminem tweeted "Relapse
+iPhone game coming along nicely" with a screenshot: a buff mini-Em wielding
+a **2-by-4** at a bloody-faced zombie in a decrepit lobby. [MTV News picked
+it up](https://www.mtv.com/news/ao3j50/eminem-readying-relapse-iphone-game) two days later; [Pocket Gamer covered it](https://www.pocketgamer.com/relapse/eminem-resurfaces-with-iphone-game/) the day after that and
+wondered whether Apple would even approve it, the App Store having recently
+rejected a Nine Inch Nails app for "objectionable content". Apple approved
+it. The game landed on May 19, 2009 — album day — at $2.99, with a [trailer
+on Skee.TV](https://www.youtube.com/watch?v=ujwng1czda8). The studio's own blurb: "you assume the role of Eminem as he
+fights his way out of Popsomp Hills, the rehab center he was remanded to.
+Insane patients, Orderlies, and Nurses will stop at nothing to see that Em
+never makes it out alive." (The blurb says Nurses; the code says Doctors.
+Even the marketing copy and the enemy table disagree.)
+
+A week after launch, the same blog post promised version 1.1: longer
+levels, smarter AI, a more responsive Eminem, a skippable intro, and — the
+good part — "a two by four for orderly smacking goodness". Here is where
+the archaeology gets satisfying: that 2-by-4, the weapon in the
+*announcement screenshot*, is sitting in the shipped binary's weapon table
+right now — `TwoByFour`, range 0.5, damage 0.35, between the fist and the
+handgun — and the shipped game has no way to give it to you. Only the 9mm
+and the M16 ever drop. It was cut between the announcement and launch, its
+stats left behind in the code, then promised back for 1.1. And when you
+finish the game, the ending video closes on three words in scratched
+grindhouse type: **TO BE CONTINUED…** — I pulled that frame out of the
+shipped `end.m4v` myself.
+
+None of it happened. No 1.1, no continuation, no sequel. The game vanished
+from the App Store within weeks of release and took the whole plan with
+it. A "to be continued" in a delisted binary is about as clean a monument
+to abandoned digital culture as you could design on purpose.
+
 ## The fifteen-year hunt
 
 None of this starts with me. It starts with the YouTube creator
@@ -35,8 +82,8 @@ preservationists dragged *Relapse: Resistance* back from the edge of lost
 media. The chain of custody deserves listing in full, because my project is a
 link in it, not the origin of it:
 
-- An anonymous user, **mr6**, uploaded the IPA to archive.org, where it sat
-  unnoticed for months.
+- An anonymous user, **mr6**, uploaded the IPA to [archive.org](https://archive.org/details/relapse-1.0.0) in July 2024,
+  from a throwaway account, where it sat unnoticed for months.
 - An Eminem fan, **Shady fan**, found it by coincidence and started pulling
   assets out.
 - **Hunter** deconstructed the 41.7 MB `.ipa` and established the bad news:
@@ -153,8 +200,8 @@ The other half of the ground truth was a gift: the game logic ships as
 substantially identical to the original C#. 33 classes, 5,232 lines — the
 entire game, readable. And the Mach-O has `cryptid = 0`: this app was
 **never FairPlay-encrypted**. No protection was circumvented because there
-was no protection. The whole game sat in the open on archive.org; it just
-took seventeen years and a chain of eight people before anyone looked.
+was no protection. The whole game sat in the open; it just took fifteen
+years and a chain of eight people before anyone could look.
 
 ## Decompiled code as specification — and getting burned by it
 
