@@ -107,15 +107,17 @@ None of this starts with me. It starts with the YouTube creator
 [COBYSUCKS!](https://www.youtube.com/watch?v=sv6y-zlXtlg), whose documentary
 *The 15 Year Hunt For The Lost Eminem Game* records how a chain of
 volunteers dragged *Relapse: Resistance* back from the edge of lost media.
-I'm not going to recount the cast or the plot here, because if you have any
-affection at all for a lost-media quest you should watch it cold — it has
-everything the genre owes you. An IPA surfacing anonymously on
+The short version: the IPA surfaced anonymously on
 [archive.org](https://archive.org/details/relapse-1.0.0) in July 2024 and
-sitting unnoticed for months. A framework that died with iOS 9, forcing
-everything onto period hardware. A six-hour guided jailbreak of an eBay
-iPhone 3G. A dead Wi-Fi chip that nearly ended the whole project. A defunct
-screen-mirroring utility brought back from the grave by spotting a broken
-domain prefix in a URL. Strangers donating decade-old hardware to the cause.
+sat unnoticed for months. When it was finally found, the game's framework
+turned out to have died with iOS 9, forcing everything onto period
+hardware — a six-hour guided jailbreak of an eBay iPhone 3G, a dead Wi-Fi
+chip that nearly ended the whole project, a defunct screen-mirroring
+utility brought back from the grave by spotting a broken domain prefix in
+a URL, strangers donating decade-old hardware to the cause. If you have
+any affection for a lost-media quest, watch the documentary — the people
+who made each step happen are thanked properly there, and the full story
+is better told at video length than I can manage here.
 
 That is what software preservation actually looks like: unglamorous,
 contingent, and absurdly disproportionate to the artifact — years of
