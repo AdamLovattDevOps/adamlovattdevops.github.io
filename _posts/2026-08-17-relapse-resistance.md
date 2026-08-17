@@ -94,9 +94,9 @@ all attack with the table's `Syringe` entry. It was cut between the
 announcement and launch, its stats left behind in the code, then promised
 back for 1.1.
 
-![Original capture next to the port: an orderly swings a plank in the 2009
-footage, while the code underneath attacks with the Syringe
-entry](/assets/images/cmp_combat.png) And when you
+![Level 2 in the 2009 capture and in the port's Windows build: same
+elevators, same chair, same patient swinging a plank — while the code
+underneath attacks with the Syringe entry](/assets/images/cmp_combat.png) And when you
 finish the game, the ending video closes on three words in scratched
 grindhouse type: **TO BE CONTINUED…** — I pulled that frame out of the
 shipped `end.m4v` myself.
@@ -332,8 +332,10 @@ pak (skeleton, skinned mesh, weapon attachments bound to wrist joints, 37
 clips), and a game pak (sprite atlases with precomputed UVs, all audio
 pre-decoded to 22.05 kHz mono PCM16 so the runtime needs no codec).
 
-![Level 1 in the 2009 iPhone capture and in the native port: same corridor,
-same HUD layout, same teal carpet](/assets/images/cmp_level1.png)
+![The title screen, original and port](/assets/images/cmp_title.png)
+
+![Level 1 in the 2009 iPhone capture and in the port's Windows build: same
+corridor, same HUD, same on-screen controls](/assets/images/cmp_level1.png)
 
 The source, the extraction tools and the audit documents are on GitHub:
 [AdamLovattDevOps/relapse-resistance](https://github.com/AdamLovattDevOps/relapse-resistance).
