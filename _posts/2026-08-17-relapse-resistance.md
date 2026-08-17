@@ -21,13 +21,14 @@ apparatus: singles, a horror-styled video campaign, and — announced by
 tweet, released on album day for $2.99 — an iPhone game. Six levels,
 41.7 MB, built by a small Florida contract studio in the App Store's first
 year, on a marketing deadline. You don't need my opinion of it, because
-2009 left one on record: the sole contemporary review that survives — and
-the fact that only one survives is its own data point — declared it
+2009 left one on record: the only contemporary review I could find — and
+that I could find only one is its own data point — declared it
 ["literally the worst game I have ever been subjected to in my entire
 life"](https://web.archive.org/web/20221129152921/https://thekoalition.com/reviews/eminem-relapse-the-game-review),
 while a launch-week blog post settled for "Relapse = FAIL". It was
-delisted within weeks, and almost nobody played it then or has thought
-about it since.
+quietly delisted — still on the store when that review ran six weeks in,
+gone at some unrecorded point after — and almost nobody played it then or
+has thought about it since.
 
 The premise, when you reach it, takes some easing into. You play Eminem
 fighting his way out of a psychiatric rehab facility, and the things
@@ -55,8 +56,8 @@ implications stop at novelty promo games.
 The game was credited to "Shady Games and DS Media Labs" — the former
 presumably the artist-side label (the bundle ID is
 `com.shadygames.Relapse`), the latter a real and traceable studio. DS Media
-Labs, Inc. was a four-partner iPhone contract shop working out of the West
-Palm Beach area, and their [archived blog](https://web.archive.org/web/20090828032318/http://www.dsmedialabs.com/blog.php) reads like a core sample of the
+Labs, Inc. was a small iPhone contract shop working out of the West
+Palm Beach area (four of them flew to WWDC '09), and their [archived blog](https://web.archive.org/web/20090828032318/http://www.dsmedialabs.com/blog.php) reads like a core sample of the
 early App Store: a taser-noise app (*Stun-O-Matic*), a light-cycles clone
 (*Light Riders*), *FLOverload*, a *Fall Out Boy All Access* app, and — a few
 months after Relapse — *Ramp Champ*, a genuinely well-regarded skeeball game
@@ -92,11 +93,11 @@ grindhouse type: **TO BE CONTINUED…** — I pulled that frame out of the
 shipped `end.m4v` myself.
 
 None of it happened — as far as anyone can prove. The game vanished from
-the App Store within weeks of release and took the whole plan with it. No
+the App Store not long after launch and took the whole plan with it. No
 continuation, no sequel; and whether 1.1 itself ever landed is now
 unknowable in an instructive way. The one binary that survives is 1.0 —
 the archive.org item is literally named `relapse-1.0.0`. If an update did
-ship in the game's few weeks on the store, nobody kept a copy, and the
+ship in the game's short time on the store, nobody kept a copy, and the
 App Store keeps no public record of version history for software it has
 delisted. So the promised patch is either vapour or lost media nested
 inside lost media — a version of a game nobody preserved, of which we
@@ -114,8 +115,8 @@ volunteers dragged *Relapse: Resistance* back from the edge of lost media.
 The short version: the IPA surfaced anonymously on
 [archive.org](https://archive.org/details/relapse-1.0.0) in July 2024 and
 sat unnoticed for months. When it was finally found, the game's framework
-turned out to have died with iOS 9, forcing everything onto period
-hardware — a six-hour guided jailbreak of an eBay iPhone 3G, a dead Wi-Fi
+turned out to be gone from iOS 10 onward — it needs iOS 9 or earlier —
+forcing everything onto period hardware — a six-hour guided jailbreak of an eBay iPhone 3G, a dead Wi-Fi
 chip that nearly ended the whole project, a defunct screen-mirroring
 utility brought back from the grave by spotting a broken domain prefix in
 a URL, strangers donating decade-old hardware to the cause. If you have
@@ -156,9 +157,10 @@ Here is where it gets properly low-level, because the first wall is a good
 one.
 
 The IPA's Unity data files are serialized-file **format version 6** — Unity
-iPhone 1.0.2f4, 2009. Modern Unity files embed a *type tree*: a schema, per
-class, describing every field and its width, so a tool can walk any object
-without prior knowledge. Version 6 has none of that. No type trees, no
+iPhone 1.0.2f4, 2009. Later Unity formats can embed a *type tree*: a schema,
+per class, describing every field and its width, so a tool can walk any
+object without prior knowledge — and where a build strips it, modern tools
+fall back on curated type databases. Version 6 has neither option. No type trees, no
 version string, just an object table — offsets, sizes, class IDs — and then
 opaque bytes. UnityPy and AssetRipper will happily enumerate the objects and
 then shrug at every body: their type databases reach back a long way, but
@@ -169,13 +171,12 @@ protected.
 So the schema had to be reconstructed, and it came in two halves.
 
 **Field order came from the shipped binary itself.** Unity's serializer
-registers field names in declaration order, and those names survive as plain
-strings in the armv6 Mach-O. One command gives you the skeleton of the Mesh
+registers field names in order, and those names survive as plain strings
+in the armv6 Mach-O — so the string table preserves the field sequence. One command gives you the skeleton of the Mesh
 serializer:
 
     strings -a -t d Relapse | grep m_IndexBuffer
-    # neighbours in the string table: m_SubMeshes, m_IndexBuffer, m_Vertices,
-    # m_Skin, m_BindPose, m_UV, m_Tangents, m_Normals ...
+    # and its neighbours in the string table: m_SubMeshes, m_Vertices, ...
 
 The 2009 binary carries its own field manifest, in order, for every
 serializable class. It just doesn't tell you how wide anything is.
@@ -219,7 +220,7 @@ substantially identical to the original C#. 33 classes, 5,232 lines — the
 entire game, readable. And the Mach-O has `cryptid = 0`: this app was
 **never FairPlay-encrypted**. No protection was circumvented because there
 was no protection. The whole game sat in the open; it just took fifteen
-years and a chain of eight people before anyone could look.
+years and a chain of volunteers before anyone could look.
 
 ## Decompiled code as specification — and getting burned by it
 
@@ -265,7 +266,7 @@ exactly the point.
 that never quite arrives. The port had a linear ramp that hits the target
 and stops dead. Different response, different stopping distance, different
 camera lag. The fix is cheap because `SmoothDamp` is fully specified — it's
-a five-line polynomial approximation of the exponential, and the original's
+a short polynomial approximation of the exponential, and the original's
 tuning (`maxWalkVelocity 4.0`, `accelerationTime 0.15`) comes straight out
 of the scene data.
 
