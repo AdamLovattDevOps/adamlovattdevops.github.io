@@ -3,7 +3,6 @@ layout: post
 title: "If the Binaries Exist: Rescuing a Lost 2009 Mobile Game Nobody Played"
 date: 2026-08-17
 description: "An obscure delisted advergame, a fifteen-year community hunt, an AI-assisted teardown of an undocumented Unity format — and the question of how much digital culture will actually be preserved, and by whom."
-published: false
 ---
 
 
@@ -16,7 +15,8 @@ changes who can do software preservation, how much of our digital culture
 might actually survive, and how long yesterday's DRM keeps meaning
 anything. If the binaries exist, AI can and will take them apart. Code:
 [relapse-resistance](https://github.com/AdamLovattDevOps/relapse-resistance)
-— engine-only builds on the releases page; you supply your own IPA.
+— alpha-quality engine-only builds on the releases page; you supply your
+own IPA.
 
 In 2009, Eminem's comeback album *Relapse* got the full promotional
 apparatus: singles, a horror-styled video campaign, and — announced by
@@ -350,7 +350,14 @@ The releases page carries engine-only builds — Windows, Linux, an
 AppImage — that contain no game content: you download the IPA from
 archive.org yourself, verify the hash, and the tools generate the data
 files locally. The APK isn't published at all, because Android bakes the
-data into the archive itself.
+data into the archive itself. Fair warning that the port is alpha and
+experimental — it plays start to finish and passes its test suite, but
+the known gaps (no collision against room geometry, no extras menus) are
+listed in the README, and the fidelity audit is ongoing. I proved the
+bring-your-own-IPA path end to end before publishing this: fresh clone,
+fresh archive.org download, hash verified, full extraction and pack run,
+a clean cross-compiled exe, and a playable game on a Windows machine that
+had never seen the project.
 
 The end-to-end test plays the game with a bot that inputs no faster than a
 human — about three attacks a second, a jump or two per level, no
