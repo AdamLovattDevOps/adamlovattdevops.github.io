@@ -14,7 +14,9 @@ original. The game itself is a curiosity. The point is what the exercise
 demonstrates: reverse engineering has stopped being expensive, which
 changes who can do software preservation, how much of our digital culture
 might actually survive, and how long yesterday's DRM keeps meaning
-anything. If the binaries exist, AI can and will take them apart.
+anything. If the binaries exist, AI can and will take them apart. Code:
+[relapse-resistance](https://github.com/AdamLovattDevOps/relapse-resistance)
+— engine-only builds on the releases page; you supply your own IPA.
 
 In 2009, Eminem's comeback album *Relapse* got the full promotional
 apparatus: singles, a horror-styled video campaign, and — announced by
@@ -86,8 +88,15 @@ the archaeology gets satisfying: that 2-by-4, the weapon in the
 *announcement screenshot*, is sitting in the shipped binary's weapon table
 right now — `TwoByFour`, range 0.5, damage 0.35, between the fist and the
 handgun — and the shipped game has no way to give it to you. Only the 9mm
-and the M16 ever drop. It was cut between the announcement and launch, its
-stats left behind in the code, then promised back for 1.1. And when you
+and the M16 ever drop, and nothing in the decompiled code ever clones the
+`TwoByFour` entry: enemies, whatever their sprite art is drawn swinging,
+all attack with the table's `Syringe` entry. It was cut between the
+announcement and launch, its stats left behind in the code, then promised
+back for 1.1.
+
+![Original capture next to the port: an orderly swings a plank in the 2009
+footage, while the code underneath attacks with the Syringe
+entry](/assets/images/cmp_combat.png) And when you
 finish the game, the ending video closes on three words in scratched
 grindhouse type: **TO BE CONTINUED…** — I pulled that frame out of the
 shipped `end.m4v` myself.
@@ -322,6 +331,17 @@ baked world matrices, the scene camera, spawn parameters, exits), a player
 pak (skeleton, skinned mesh, weapon attachments bound to wrist joints, 37
 clips), and a game pak (sprite atlases with precomputed UVs, all audio
 pre-decoded to 22.05 kHz mono PCM16 so the runtime needs no codec).
+
+![Level 1 in the 2009 iPhone capture and in the native port: same corridor,
+same HUD layout, same teal carpet](/assets/images/cmp_level1.png)
+
+The source, the extraction tools and the audit documents are on GitHub:
+[AdamLovattDevOps/relapse-resistance](https://github.com/AdamLovattDevOps/relapse-resistance).
+The releases page carries engine-only builds — Windows, Linux, an
+AppImage — that contain no game content: you download the IPA from
+archive.org yourself, verify the hash, and the tools generate the data
+files locally. The APK isn't published at all, because Android bakes the
+data into the archive itself.
 
 The end-to-end test plays the game with a bot that inputs no faster than a
 human — about three attacks a second, a jump or two per level, no
