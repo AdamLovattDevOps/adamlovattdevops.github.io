@@ -7,19 +7,28 @@ published: false
 ---
 
 
-In 2009, to promote the album *Relapse*, a small Florida contract studio
-shipped a $2.99 iPhone game in which Eminem walks through a psychiatric
-hospital punching patients, orderlies and doctors to earn "will power
-points". At 400 points a 9mm materialises. At
-1200, an M16. If your tolerance meter fills, the screen says **YOU RELAPSED**
-and you start again. Six levels. 41.7 MB. Let me be clear about the artifact
-we are dealing with here: this game is not good. It was not good in 2009. It
-is a promotional tie-in with a walk cycle, it was delisted, forgotten, and by
-every commercial measure it deserved to be. Almost nobody played it then and
-nobody is clamouring to play it now.
+In 2009, Eminem's comeback album *Relapse* got the full promotional
+apparatus: singles, a horror-styled video campaign, and — announced by
+tweet, released on album day for $2.99 — an iPhone game. Six levels,
+41.7 MB, built by a small Florida contract studio in the App Store's first
+year. Let me be clear about the artifact we are dealing with here: this
+game is not good. It was not good in 2009. It is a promotional tie-in with
+a walk cycle, it was delisted within weeks, and almost nobody played it
+then or has thought about it since.
 
-Which is exactly why it's the right specimen. This is panning for digital
-gold in a river nobody else would stand in — and the pan, this time, was AI.
+The premise, when you reach it, takes some easing into. You play Eminem
+fighting his way out of a psychiatric rehab facility, and the things
+standing between you and the exit are the patients. You punch them — and
+the orderlies, and the doctors — to earn "will power points". At 400
+points a 9mm materialises. At 1200, an M16. If your tolerance meter fills,
+the screen says **YOU RELAPSED** and you start again. It is wild that this
+existed as an official, label-adjacent product, even in 2009 — a year with
+a considerably higher tolerance for this sort of thing. File that away; it
+turns out to matter for the preservation question, not just the taste one.
+
+Meanwhile, its very unloveliness is what makes it the right specimen. This
+is panning for digital gold in a river nobody else would stand in — and
+the pan, this time, was AI.
 The game is now fully extracted, decompiled, audited method by method, and
 reimplemented as a native C++ port that runs on Linux, Windows, Android
 and — cross-compiled from Linux with no Mac in sight — iOS. It will outlive
@@ -362,8 +371,12 @@ Flash took a whole medium with it; every dead platform strands a generation
 of work, and the overwhelming majority of it — almost certainly the vast
 majority of all digital art ever made — will simply not survive, because
 survival currently depends on someone caring at exactly the right moment.
-There is no legal deposit library for mobile software. No institution was
-ever coming for *Relapse: Resistance*. The people who led this charge were
+And some of it will be lost on purpose: a game this far on the wrong side
+of taste is exactly the kind of asset a rights holder quietly prefers
+forgotten. Embarrassment is a preservation risk in its own right — nobody
+files a takedown against their proudest work — and deliberate forgetting
+is still forgetting. There is no legal deposit library for mobile
+software. No institution was ever coming for *Relapse: Resistance*. The people who led this charge were
 an anonymous uploader, a fan who got curious, a jailbreaker with a free
 evening, and a YouTuber — volunteers, every one, doing institutional work
 with none of the mandate and none of the budget. If that's who leads, then
