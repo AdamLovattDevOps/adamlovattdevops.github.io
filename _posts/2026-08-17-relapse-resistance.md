@@ -96,7 +96,7 @@ App Store keeps no public record of version history for software it has
 delisted. So the promised patch is either vapour or lost media nested
 inside lost media — a version of a game nobody preserved, of which we
 cannot even establish the existence. That is how thin the record gets,
-sixteen years out, for anything that lived only in a storefront. A "to be
+seventeen years out, for anything that lived only in a storefront. A "to be
 continued" in a delisted binary is about as clean a monument to abandoned
 digital culture as you could design on purpose.
 
